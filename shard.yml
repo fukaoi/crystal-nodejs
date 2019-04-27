@@ -1,0 +1,9 @@
+name: crystal-nodejs
+version: 0.1.0
+
+authors:
+  - fukaoi <goodakira7@gmail.com>
+
+crystal: 0.27.2
+
+license: MIT
