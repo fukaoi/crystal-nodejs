@@ -11,7 +11,7 @@ targets:
     main: src/nodejs.cr  
 
 scripts:
-  postinstall: g++ ext/test.c -o bin/libnode_main -L./ ./ext/node_main.o ./ext/libnode.so.64 -Wl,-rpath=./ext
+  postinstall: cd lib/nodejs;g++ ext/test.c -o bin/libnode_main -L./ ./ext/node_main.o ./ext/libnode.so.64 -Wl,-rpath=./ext
 
 development_dependencies:
   ameba:
