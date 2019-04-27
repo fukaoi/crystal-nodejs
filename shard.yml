@@ -1,9 +1,24 @@
-name: crystal-nodejs
+name: nodejs
 version: 0.1.0
 
 authors:
-  - fukaoi <goodakira7@gmail.com>
-
+  - fukaoi 
 crystal: 0.27.2
-
 license: MIT
+
+targets:
+  nodejs:
+    main: src/nodejs.cr  
+
+scripts:
+  postinstall: g++ ext/test.c -o bin/libnode_main -L./ ./ext/node_main.o ./ext/libnode.so.64 -Wl,-rpath=./ext
+
+dependencies:  
+  nodejs:
+    path: ~/Work/crystal-nodejs
+
+development_dependencies:
+  ameba:
+    github: veelenga/ameba
+    version: ~> 0.9.0
+
