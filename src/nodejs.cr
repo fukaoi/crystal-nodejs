@@ -6,9 +6,8 @@ module Nodejs
 
   def eval(source : String) : String
     io = IO::Memory.new
-    Process.run("bin/libnode -e #{source}", shell: true, output: io)
-    p io.to_s
-    ""
+    Process.run("bin/libnode -e \"#{source}\"", shell: true, output: io)
+    io.to_s.chomp
   end
 end
 

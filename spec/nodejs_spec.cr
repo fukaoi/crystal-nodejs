@@ -1,10 +1,14 @@
 require "./spec_helper"
 
 describe Nodejs do
-  it "works" do
+  it "Console output" do
+    mess = "spec"
     code = <<-SRC
-      console.log('spec');
+      console.log('#{mess}');
     SRC
-    Nodejs.eval(code)
+    res = Nodejs.eval(code)
+    res.should eq mess
   end
+
+
 end
