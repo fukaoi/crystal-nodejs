@@ -14,7 +14,7 @@ describe Nodejs do
     code = <<-SRC
       throw new Error('non local exit');
     SRC
-    expect_raises(Nodejs::SystemException) do 
+    expect_raises(Nodejs::SystemException) do
       Nodejs.eval(code)
     end
   end
@@ -23,7 +23,7 @@ describe Nodejs do
     code = <<-SRC
       return false;
     SRC
-    expect_raises(Nodejs::SystemException) do 
+    expect_raises(Nodejs::SystemException) do
       Nodejs.eval(code)
     end
   end
@@ -31,7 +31,7 @@ describe Nodejs do
   it "Throw error object" do
     mess = "spec error"
     code = <<-SRC
-    try {  
+    try {
       throw new Error('#{mess}');
     } catch(e) {
       console.log(e.message);

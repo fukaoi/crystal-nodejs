@@ -1,6 +1,11 @@
 require "../spec_helper"
 
 describe Nodejs::Npm do
+
+  Spec.after_each do
+    system("rm -r ./lib/node_modules")
+  end
+
   it "npm init" do
     res = Nodejs::Npm.init
     res.should be_true
