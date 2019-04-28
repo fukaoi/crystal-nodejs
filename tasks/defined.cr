@@ -16,7 +16,6 @@ V8_DIR    = "#{TOOLS_DIR}/v8"
 DEFAULT_ENV  = "test"
 ENV_PATTERNS = {release: "release", development: "development", test: "test"}
 
-
 begin
   ENV["LUCKY_ENV"]
 rescue KeyError

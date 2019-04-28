@@ -1,7 +1,8 @@
-# TODO: Write documentation for `Crystal::Nodejs`
-module Crystal::Nodejs
-  VERSION = "0.1.0"
+require "./nodejs/*"
 
-  # TODO: Put your code here
+module Nodejs
+  extend self
+  def main
+  end
 end
-p Crystal::Nodejs::VERSION
+
