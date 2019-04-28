@@ -1,8 +1,10 @@
 module Nodejs
   module Npm
     extend self
-    def init(dir : String = "/tmp") 
-      system("cd #{dir};#{Node::Npm.path} init --yes")
+    @@npm = "#{ENV["PWD"]}/ext/npm" 
+
+    def init : Bool
+      system("#{@@npm} init --yes")
     end
 
     def is_installed?(package_name : String) : Bool
@@ -12,6 +14,11 @@ module Nodejs
         status |= File.directory?("#{ENV["NODE_PATH"]}/node_modules/#{package_name}")
       end
       status
+    end
+    
+    def install(package_name : String) : Bool 
+      system("#{@@npm} install #{package_name}")
+      
     end
 
     def security_check
