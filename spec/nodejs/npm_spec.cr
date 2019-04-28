@@ -1,7 +1,6 @@
 require "../spec_helper"
 
 describe Nodejs::Npm do
-
   Spec.after_each do
     system("rm -r ./lib/node_modules")
   end
@@ -27,4 +26,3 @@ describe Nodejs::Npm do
     res.should be_true
   end
 end
-

@@ -2,10 +2,9 @@ require "./spec_helper"
 
 describe Nodejs do
   it "module:ripple-lib" do
-  
     Spec.before_each do
-      Nodejs::Npm.install("ripple-lib") unless Nodejs::Npm.is_installed?("ripple-lib") 
-      Nodejs::Npm.install("stellar-sdk") unless Nodejs::Npm.is_installed?("stellar-sdk") 
+      Nodejs::Npm.install("ripple-lib") unless Nodejs::Npm.is_installed?("ripple-lib")
+      Nodejs::Npm.install("stellar-sdk") unless Nodejs::Npm.is_installed?("stellar-sdk")
     end
 
     code = <<-SRC

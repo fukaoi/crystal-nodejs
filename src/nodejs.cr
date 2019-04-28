@@ -5,12 +5,12 @@ module Nodejs
   extend self
 
   def eval(source : String) : String
-    #todo: process.wait ? fiber nonblocking
+    # todo: process.wait ? fiber nonblocking
     io = IO::Memory.new
     io_error = IO::Memory.new
     status = Process.run("ext/libnode", args: {"-e", source}, output: io, error: io_error)
     unless status.success?
-      raise  SystemException.new("Exec libnode: #{io_error.to_s}")
+      raise SystemException.new("Exec libnode: #{io_error.to_s}")
     end
     io.close
     io_error.close
