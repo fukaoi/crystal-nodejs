@@ -5,7 +5,7 @@ class Build < LuckyCli::Task
   summary ""
 
   def initialize
-    @install_dir = "./bin"
+    @install_dir = "./ext"
     @objects = %w(ext/node_main.o ext/libnode.so.64)
   end
 
@@ -21,7 +21,6 @@ class Build < LuckyCli::Task
       -Wl,-rpath=#{@install_dir}
     "
     system(cmd)
-    @objects.each { |file| FileUtils.cp(file, @install_dir) }
     success("build done")
   rescue e : Exception
     failed(e.to_s)
