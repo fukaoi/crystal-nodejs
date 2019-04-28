@@ -8,17 +8,11 @@ module Nodejs
     end
 
     def is_installed?(package_name : String) : Bool
-      status = false
-      status |= File.directory?("#{ENV["PWD"]}/node_modules/#{package_name}")
-      if ENV.has_key?("NODE_PATH")
-        status |= File.directory?("#{ENV["NODE_PATH"]}/node_modules/#{package_name}")
-      end
-      status
+      system("#{@@npm} list #{package_name} | grep #{package_name}")
     end
-    
+   
     def install(package_name : String) : Bool 
       system("#{@@npm} install #{package_name}")
-      
     end
 
     def security_check
