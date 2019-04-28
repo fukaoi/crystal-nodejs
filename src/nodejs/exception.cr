@@ -1,4 +1,4 @@
-module Node
-  class CrNodeException < Exception
+module Nodejs
+  class SystemException < Exception
   end
 end
