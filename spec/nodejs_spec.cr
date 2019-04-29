@@ -91,7 +91,7 @@ describe Nodejs do
   it "Replace JS param to Crystal param" do
     code = <<-SRC
       const srv = process.env.SERVER;
-      const quorum = process.env.DB;let quorum = process.env.PASSWORD
+      const quorum = process.env.DB;let password = process.env.PASSWORD
     SRC
     hash = {
       "server"   => "http://localhost",
@@ -101,9 +101,37 @@ describe Nodejs do
 
     expect = <<-SRC
       const srv = "http://localhost";
-      const quorum = "PostgreSQL";let quorum = 11111111390
+      const quorum = "PostgreSQL";let password = 11111111390
     SRC
-  res = Nodejs.replace_params(code, hash)
-	res.should eq expect
-  end
+		res = Nodejs.replace_params(code, hash)
+		res.should eq expect
+		Nodejs.eval(res).empty?.should be_true
+	end
+
+  it "Replace complex JS param to Crystal param" do
+    code = <<-SRC
+      let groups = process.env.GROUPS;
+			groups.forEach((group) => {
+				console.log(group);
+			});
+			groups = [1,2,3,4];
+			console.log(re:, groups);
+
+			const values = process.env.VALUES;
+    SRC
+
+    hash = {
+      "groups"   => [1,2,3,4],
+      "values"   => "PostgreSQL",
+    }
+
+    expect = <<-SRC
+    SRC
+		res = Nodejs.replace_params(code, hash)
+		p! res
+		# res.should eq expect
+		# Nodejs.eval(res).empty?.should be_true
+	end
+
+	### lower, uppercase add
 end

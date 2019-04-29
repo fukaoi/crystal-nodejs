@@ -8,6 +8,7 @@ module Nodejs::Values
     JSFloat
     JSString
     JSJsonAny
+    JSArray
   end
 
   def type(v) : Type
@@ -21,6 +22,8 @@ module Nodejs::Values
       res = Type::JSString
     when .is_a?(JSON::Any)
       res = Type::JSJsonAny
+    when .is_a?(Array)
+      res = Type::JSArray
     else
       raise ValuesTypeException.new("No match type: #{v}")
     end
