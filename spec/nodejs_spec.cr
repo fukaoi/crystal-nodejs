@@ -111,26 +111,31 @@ describe Nodejs do
   it "Replace complex JS param to Crystal param" do
     code = <<-SRC
       let groups = process.env.GROUPS;
-			groups.forEach((group) => {
+      groups.forEach((group) => {
 				console.log(group);
-			});
-			groups = [1,2,3,4];
-			console.log(re:, groups);
+      });
+      console.log('re:', groups);
 
-			const values = process.env.VALUES;
+      const values = process.env.VALUES;
     SRC
 
     hash = {
       "groups"   => [1,2,3,4],
-      "values"   => "PostgreSQL",
+      "values"   => {"a" => 10, "b" => "data", "c" => 0.5},
     }
 
     expect = <<-SRC
+      let groups = [1, 2, 3, 4];
+      groups.forEach((group) => {
+				console.log(group);
+      });
+      console.log('re:', groups);
+
+      const values = {"a":10,"b":"data","c":0.5};
     SRC
 		res = Nodejs.replace_params(code, hash)
-		p! res
-		# res.should eq expect
-		# Nodejs.eval(res).empty?.should be_true
+    res.should eq expect
+    Nodejs.eval(res).empty?.should be_false
 	end
 
 	### lower, uppercase add
