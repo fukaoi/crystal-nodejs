@@ -39,7 +39,7 @@ describe Nodejs do
   it "module:js-stellar-sdk" do
     code = <<-SRC
     const StellarSdk = require('stellar-sdk')
-    const server = new SteallarSdk.Server('https://horizon.stellar.org');
+    const server = new StellarSdk.Server('https://horizon.stellar.org');
     const accountId = 'GA7MC2WZT2RG7LOD7GA4MJ2CQ35ODPZKG2QXZT5O6K3F4642YG3CZP6C';
 
     server.transactions()
@@ -55,6 +55,6 @@ describe Nodejs do
     SRC
     res = Nodejs.eval(code)
     puts "verbose res: #{res}"
-    res["hash"].as_i.should be > 0
+    res["hash"].to_s.empty?.should be_false
   end
 end
