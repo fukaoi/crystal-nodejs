@@ -2,7 +2,7 @@ require "./defined"
 require "file_utils"
 
 class Build < LuckyCli::Task
-  summary ""
+  summary "Build wrapper binary libnode and crystal"
 
   def initialize
     @install_dir = "./ext"

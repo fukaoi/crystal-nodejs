@@ -4,7 +4,7 @@ require "./nodejs/*"
 module Nodejs
   extend self
 
-  def eval(source_code : String) : String
+  def eval(source_code : String) : JSON::Any
     # todo: process.wait ? fiber nonblocking
     io = IO::Memory.new
     io_error = IO::Memory.new
@@ -14,7 +14,9 @@ module Nodejs
     end
     io.close
     io_error.close
-    io.to_s.chomp
+    tuple = extract_result(io.to_s.chomp)
+		display_output(tuple[:output])
+		tuple[:result]
   end
 
   def replace_params(
@@ -33,4 +35,24 @@ module Nodejs
     status = system("ext/libnode -v")
     raise SystemException.new("libnode version") unless status
   end
+
+	def extract_result(res : String) : NamedTuple(result: JSON::Any, output: String)
+		matched = /\{.*\:.*\}/.match(res).try &.[0]
+		result : JSON::Any
+		output : String
+		unless matched
+			result = JSON.parse("{}")
+			output = res
+		else 
+			result = JSON.parse(matched.to_s)
+			output = res.split(matched).join    
+		end
+		{result: result, output: output}
+	end
+
+	private def display_output(output : String) : Void
+		unless output.empty?
+			puts("# -- debug or console.log(non json)) -- :\n#{output}")
+		end
+	end
 end
