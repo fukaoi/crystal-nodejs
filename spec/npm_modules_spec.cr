@@ -1,16 +1,17 @@
 require "./spec_helper"
 
 describe Nodejs do
-  it "module:ripple-lib" do
-    Spec.before_each do
-      unless Nodejs::Npm.is_installed?("ripple-lib")
-        Nodejs::Npm.install("ripple-lib")
-      end
-      unless Nodejs::Npm.is_installed?("stellar-sdk")
-        Nodejs::Npm.install("stellar-sdk")
-      end
+  Spec.before_each do
+    Nodejs::Npm.init
+    unless Nodejs::Npm.is_installed?("ripple-lib")
+      Nodejs::Npm.install("ripple-lib")
     end
+    unless Nodejs::Npm.is_installed?("stellar-sdk")
+      Nodejs::Npm.install("stellar-sdk")
+    end
+  end
 
+  it "module:ripple-lib" do
     code = <<-SRC
       'use strict';
       const RippleAPI = require('ripple-lib').RippleAPI;
