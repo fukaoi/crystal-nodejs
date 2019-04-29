@@ -138,5 +138,23 @@ describe Nodejs do
     Nodejs.eval(res).empty?.should be_false
 	end
 
-	### lower, uppercase add
+  it "Replace lower, upper case" do
+   code = <<-SRC
+      const srv = process.env.WebServer;
+      const db = process.env.dataBase;
+    SRC
+
+    hash = {
+      "webserver" => "https://example.com",
+      "database"  => "MySQL"
+    }
+
+    expect = <<-SRC
+      const srv = "https://example.com";
+      const db = "MySQL";
+    SRC
+		res = Nodejs.replace_params(code, hash)
+    p res
+    res.should eq expect
+  end
 end
