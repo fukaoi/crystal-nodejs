@@ -23,7 +23,7 @@ module Nodejs
   ) : String
     prefix = "process.env"
     replaces.each do |k, v|
-      source_code = source_code.sub(/#{prefix}.#{k}/i, Nodejs::Values.convert(v)
+      source_code = source_code.sub(/#{prefix}.#{k}/i, Nodejs::Values.convert_js(v)
 			)
     end
     source_code
