@@ -28,4 +28,9 @@ module Nodejs
     end
     source_code
   end
+ 
+  def version : Void
+    status = system("ext/libnode -v")
+    raise SystemException.new("libnode version") unless status
+  end
 end

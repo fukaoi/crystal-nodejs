@@ -157,4 +157,8 @@ describe Nodejs do
     p res
     res.should eq expect
   end
+
+  it "libnode version" do
+    Nodejs.version
+  end
 end
