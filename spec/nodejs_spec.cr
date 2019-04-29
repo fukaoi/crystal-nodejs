@@ -98,7 +98,12 @@ describe Nodejs do
       "DB"       => "PostgreSQL",
       "Password" => 11111111390,
     }
-    res = Nodejs.replace_params(code, hash)
-    p res
+
+    expect = <<-SRC
+      const srv = "http://localhost";
+      const quorum = "PostgreSQL";let quorum = 11111111390
+    SRC
+  res = Nodejs.replace_params(code, hash)
+	res.should eq expect
   end
 end

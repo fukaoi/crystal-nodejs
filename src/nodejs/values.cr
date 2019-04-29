@@ -1,3 +1,5 @@
+require "json"
+
 module Nodejs::Values
   extend self
 

@@ -1,5 +1,4 @@
 require "../spec_helper"
-require "json"
 
 describe Nodejs::Values do
   it "Type check" do

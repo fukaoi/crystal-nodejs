@@ -23,9 +23,10 @@ module Nodejs
   ) : String
     prefix = "process.env"
     replaces.each do |k, v|
-      !p v.is_a?(Number)
-      !pp v
-      source_code = source_code.gsub(/#{prefix}.#{k.upcase}|#{prefix}.#{k.downcase}/, v)
+      source_code = source_code.gsub(
+				/#{prefix}.#{k.upcase}|#{prefix}.#{k.downcase}/,
+				Nodejs::Values.convert(v)
+			)
     end
     source_code
   end
