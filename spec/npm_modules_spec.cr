@@ -23,8 +23,8 @@ describe Nodejs do
         const myAddress = 'rJumr5e1HwiuV543H7bqixhtFreChWTaHH';
         return api.getAccountInfo(myAddress);
       }).then(info => {
-        // this log is crystal response
-        console.log(info.sequence);
+        const json = JSON.stringify({seq: info.sequence})
+        console.log(json);
       }).then(() =>{
         return api.disconnect();
       }).then(() => {
@@ -33,20 +33,21 @@ describe Nodejs do
     SRC
     res = Nodejs.eval(code)
     puts "verbose res: #{res}"
-    res.empty?.should be_false
+    res["seq"].as_i.should be > 0
   end
 
   it "module:js-stellar-sdk" do
     code = <<-SRC
     const StellarSdk = require('stellar-sdk')
-    const server = new StellarSdk.Server('https://horizon.stellar.org');
+    const server = new SteallarSdk.Server('https://horizon.stellar.org');
     const accountId = 'GA7MC2WZT2RG7LOD7GA4MJ2CQ35ODPZKG2QXZT5O6K3F4642YG3CZP6C';
 
     server.transactions()
     .forAccount(accountId)
     .call()
     .then(function (page) {
-        console.log(page.records[0].hash)
+        const json = JSON.stringify({hash: page.records[0].hash})
+        console.log(json)
     })
     .catch(function (err) {
         console.log(err);
@@ -54,6 +55,6 @@ describe Nodejs do
     SRC
     res = Nodejs.eval(code)
     puts "verbose res: #{res}"
-    res.empty?.should be_false
+    res["hash"].as_i.should be > 0
   end
 end
