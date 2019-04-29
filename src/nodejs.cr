@@ -4,11 +4,11 @@ require "./nodejs/*"
 module Nodejs
   extend self
 
-  def eval(source : String, replaces : Hash = {String => String}) : String
+  def eval(source_code : String) : String
     # todo: process.wait ? fiber nonblocking
     io = IO::Memory.new
     io_error = IO::Memory.new
-    status = Process.run("ext/libnode", args: {"-e", source}, output: io, error: io_error)
+    status = Process.run("ext/libnode", args: {"-e", source_code}, output: io, error: io_error)
     unless status.success?
       raise SystemException.new("Exec libnode: #{io_error.to_s}")
     end
@@ -16,9 +16,17 @@ module Nodejs
     io_error.close
     io.to_s.chomp
   end
-  
-  private def replace_params(params : Hash)
 
-
+  def replace_params(
+    source_code : String,
+    replaces : Hash = {String => String | Int32 | Float32}
+  ) : String
+    prefix = "process.env"
+    replaces.each do |k, v|
+      !p v.is_a?(Number)
+      !pp v
+      source_code = source_code.gsub(/#{prefix}.#{k.upcase}|#{prefix}.#{k.downcase}/, v)
+    end
+    source_code
   end
 end

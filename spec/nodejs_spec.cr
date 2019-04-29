@@ -87,4 +87,18 @@ describe Nodejs do
       Nodejs.eval(code)
     end
   end
+
+  it "Replace JS param to Crystal param" do
+    code = <<-SRC
+      const srv = process.env.SERVER;
+      const quorum = process.env.DB;let quorum = process.env.PASSWORD
+    SRC
+    hash = {
+      "server"   => "http://localhost",
+      "DB"       => "PostgreSQL",
+      "Password" => 11111111390,
+    }
+    res = Nodejs.replace_params(code, hash)
+    p res
+  end
 end
