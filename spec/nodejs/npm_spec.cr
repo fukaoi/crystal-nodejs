@@ -1,17 +1,15 @@
 require "../spec_helper"
 
 describe Nodejs::Npm do
-  Spec.after_each do
-    system("rm -r ./lib/node_modules")
-  end
-
   it "npm init" do
     res = Nodejs::Npm.init
     res.should be_true
   end
 
   it "Check npm install module(No install)" do
-    res = Nodejs::Npm.is_installed?("jquery")
+    target_module = "jquery"
+    Nodejs::Npm.uninstall(target_module)
+    res = Nodejs::Npm.is_installed?(target_module)
     res.should be_false
   end
 

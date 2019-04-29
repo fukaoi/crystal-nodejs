@@ -4,7 +4,7 @@ require "./nodejs/*"
 module Nodejs
   extend self
 
-  def eval(source : String) : String
+  def eval(source : String, replaces : Hash = {String => String}) : String
     # todo: process.wait ? fiber nonblocking
     io = IO::Memory.new
     io_error = IO::Memory.new
@@ -15,5 +15,10 @@ module Nodejs
     io.close
     io_error.close
     io.to_s.chomp
+  end
+  
+  private def replace_params(params : Hash)
+
+
   end
 end

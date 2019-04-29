@@ -15,6 +15,10 @@ module Nodejs
       system("#{@@npm} install #{package_name}")
     end
 
+    def uninstall(package_name : String) : Bool
+      system("#{@@npm} uninstall #{package_name}")
+    end
+
     def security_check
     end
   end
