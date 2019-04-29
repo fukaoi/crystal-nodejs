@@ -1,6 +1,6 @@
 require "../spec_helper"
 
-describe Nodejs::Values do
+describe "Type checks" do
   it "Type check String" do
     res = Nodejs::Values.type("Spec")
     res.should eq Nodejs::Values::Type::JSString
@@ -39,6 +39,13 @@ describe Nodejs::Values do
     res.should eq Nodejs::Values::Type::JSArray
 	end
 
+	it "Type check Hash" do
+		res = Nodejs::Values.type({"data" => "Hash"})
+    res.should eq Nodejs::Values::Type::JSHash
+	end
+end
+
+describe "Converts" do
 	it "Convert js type String" do
 		res = Nodejs::Values.convert("Spec")
 		res.should eq "\"Spec\""
@@ -67,6 +74,11 @@ describe Nodejs::Values do
 	it "Convert js type Array" do
 		res = Nodejs::Values.convert(["a", "b", "c", "d"])
 		res.should eq ["a", "b", "c", "d"]
+	end
+
+	it "Convert js type Hash" do
+		res = Nodejs::Values.convert({"data" => "Hash"})
+		res.should eq  "{\"data\":\"Hash\"}"
 	end
 end
 

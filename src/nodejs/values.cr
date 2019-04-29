@@ -9,6 +9,7 @@ module Nodejs::Values
     JSString
     JSJsonAny
     JSArray
+    JSHash
   end
 
   def type(v) : Type
@@ -24,6 +25,8 @@ module Nodejs::Values
       res = Type::JSJsonAny
     when .is_a?(Array)
       res = Type::JSArray
+    when .is_a?(Hash)
+      res = Type::JSHash
     else
       raise ValuesTypeException.new("No match type: #{v}")
     end
@@ -35,7 +38,7 @@ module Nodejs::Values
     case(typed)
     when Type::JSString
       v = %("#{v}")
-    when Type::JSJsonAny
+    when Type::JSJsonAny, Type::JSHash
       v = v.to_json
     else
       v
