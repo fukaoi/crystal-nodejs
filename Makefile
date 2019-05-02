@@ -1,17 +1,16 @@
-OBJS	= ext/libnode
-SOURCE	= ext/libnode.c
-OUT	= ext/libnode
-CC	 = gcc
-FLAGS	 = -g -c -Wall
-LFLAGS	 =  -L./ ./ext/node_main.o ./ext/libnode.so.64 -Wl,-rpath=./ext
+MAKEFILE_DIR := $(dir $(lastword $(MAKEFILE_LIST)))
 
+BUILD_DIR = ${MAKEFILE_DIR}ext/
+OBJS		= ${BUILD_DIR}node_main.o ${BUILD_DIR}libnode.so.64
+SOURCE	= ${BUILD_DIR}libnode.c
+OUT			= ${BUILD_DIR}libnode
+CC	 		= g++
+FLAGS	 	= -g -Wl,-rpath=${BUILD_DIR}
+
+IR := $(shell pwd)
 
 all: $(OBJS)
-	$(CC) -g $(OBJS) -o $(OUT) $(LFLAGS)
-
-libnode.o: libnode.c
-	$(CC) $(FLAGS) libnode.c 
-
+	$(CC) ${FLAGS} ${SOURCE} -o $(OUT) ${OBJS}
 
 clean:
 	rm -f $(OBJS) $(OUT)
