@@ -15,7 +15,7 @@ describe "Execute JS code" do
     code = <<-SRC
       throw new Error('non local exit');
     SRC
-    expect_raises(Nodejs::SystemException) do
+    expect_raises(Nodejs::NodejsException) do
       Nodejs.eval(code)
     end
   end
@@ -24,7 +24,7 @@ describe "Execute JS code" do
     code = <<-SRC
       return false;
     SRC
-    expect_raises(Nodejs::SystemException) do
+    expect_raises(Nodejs::NodejsException) do
       Nodejs.eval(code)
     end
   end
@@ -86,7 +86,7 @@ describe "Execute JS code" do
       console.error(error);
     });
     SRC
-    expect_raises(Nodejs::SystemException, mess) do
+    expect_raises(Nodejs::NodejsException, mess) do
       Nodejs.eval(code)
     end
   end

@@ -1,5 +1,4 @@
 module Nodejs
-  class SystemException < Exception; end
-
+  class NodejsException < Exception; end
   class ValuesTypeException < Exception; end
 end
