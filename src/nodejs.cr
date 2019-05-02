@@ -47,12 +47,12 @@ module Nodejs
 		matched = /\{.*\:.*\}/.match(res).try &.[0]
 		result : JSON::Any
 		output : String
-    unless matched
-			result = JSON.parse("{}")
-			output = res
-		else
+    if matched != nil
 			result = JSON.parse(matched.to_s)
 			output = res.split(matched).join
+		else
+			result = JSON.parse("{}")
+			output = res
 		end
 		{result: result, output: output}
 	end

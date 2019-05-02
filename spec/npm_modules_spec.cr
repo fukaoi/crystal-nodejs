@@ -9,7 +9,10 @@ describe Nodejs do
     unless Nodejs::Npm.is_installed?("stellar-sdk")
       Nodejs::Npm.install("stellar-sdk")
     end
-  end
+    unless Nodejs::Npm.is_installed?("mathjs")
+      Nodejs::Npm.install("mathjs")
+    end
+   end
 
   it "module:ripple-lib" do
     code = <<-SRC
@@ -56,5 +59,11 @@ describe Nodejs do
     res = Nodejs.eval(code)
     puts "verbose res: #{res}"
     res["hash"].to_s.empty?.should be_false
+  end
+
+  it "module:mathjs" do
+    res = Nodejs.file_run("spec/file_run_example.js")
+    puts "verbose res: #{res}"
+    res["result"].to_s.to_i.should eq 14
   end
 end
