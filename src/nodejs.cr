@@ -21,7 +21,7 @@ module Nodejs
 
   def file_run(file_path : String) : JSON::Any
     unless File.exists?(file_path)
-      NodejsException.new("File not found: #{file_path}")
+      raise NodejsException.new("File not found: #{file_path}")
     end
     eval(File.read(file_path))
   end
