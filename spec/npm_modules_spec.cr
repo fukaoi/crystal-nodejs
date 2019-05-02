@@ -62,7 +62,7 @@ describe Nodejs do
   end
 
   it "module:mathjs" do
-    res = Nodejs.file_run("spec/file_run_example.js")
+    res = Nodejs.file_run("spec/file_run_npm.js")
     puts "verbose res: #{res}"
     res["result"].to_s.to_i.should eq 14
   end

@@ -189,5 +189,18 @@ describe "Extract result data from result string code" do
 		tuple = Nodejs.extract_result(code)
 		tuple[:result].size.should eq 0
 		tuple[:output].empty?.should be_false
-	end	
+	end
+end
+
+describe "Read js code file and Eval js code" do
+	it "read example js file" do
+    res = Nodejs.file_run("spec/file_run.js") 
+    res["text"].to_s.empty?.should be_false
+  end
+
+	it "Not found js file" do
+    expect_raises(Nodejs::NodejsException) do
+      Nodejs.file_run("spec/hoge_fuga.js") 
+    end
+  end
 end
