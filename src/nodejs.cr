@@ -27,12 +27,12 @@ module Nodejs
   end
 
   def replace_params(
-    source_code : String,
-    replaces : Hash = {String => String | Int32 | Float32}
-  ) : String
-    prefix = "process.env"
+      source_code : String,
+      replaces : Hash = {String => String | Int32 | Float32}
+    ) : String
     replaces.each do |k, v|
-      source_code = source_code.sub(/#{prefix}.#{k}/i, Nodejs::Values.convert_js(v)
+      pattern = "const[\s]*#{k}[\s]*=[\s]*((.*);|(.*)\n)"
+      source_code = source_code.sub(/"#{pattern}"/i, Nodejs::Values.convert_js(v)
 			)
     end
     source_code
