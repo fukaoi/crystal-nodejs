@@ -31,8 +31,9 @@ module Nodejs
       replaces : Hash = {String => String | Int32 | Float32}
     ) : String
     replaces.each do |k, v|
-      pattern = "const[\s]*#{k}[\s]*=[\s]*((.*);|(.*)\n)"
-      source_code = source_code.sub(/"#{pattern}"/i, Nodejs::Values.convert_js(v)
+      source_code = source_code.sub(
+        /[\s]*const[\s]*#{k}[\s]*=[\s]*((.*);|(.*)\n)/i,
+        Nodejs::Values.convert_js(v)
 			)
     end
     source_code

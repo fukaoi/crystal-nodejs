@@ -44,7 +44,6 @@ describe "Execute JS code" do
   end
 
   it "Exec setTimeout" do
-    mess = "Hello, crystal!"
     code = <<-SRC
     let user = {
       sayHi(firstName) {
@@ -115,7 +114,7 @@ describe "Replace from JS raw code to param" do
 
   it "Replace complex JS param to Crystal param" do
     code = <<-SRC
-      let groups = process.env.GROUPS;
+      const groups = process.env.GROUPS;
       groups.forEach((group) => {
 				console.log(group);
       });
@@ -130,7 +129,7 @@ describe "Replace from JS raw code to param" do
     }
 
     expect = <<-SRC
-      let groups = [1, 2, 3, 4];
+      const groups = [1, 2, 3, 4];
       groups.forEach((group) => {
 				console.log(group);
       });
