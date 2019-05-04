@@ -31,10 +31,12 @@ module Nodejs
       replaces : Hash = {String => String | Int32 | Float32}
     ) : String
     replaces.each do |k, v|
-      source_code = source_code.sub(
-        /[\s]*const[\s]*#{k}[\s]*=[\s]*((.*);|(.*)\n)/i,
-        Nodejs::Values.convert_js(v)
-			)
+      matched = /const[\s]*#{k}[\s]*=[\s]*([\[\]\(\)"'a-z0-9\.\-\_]+)/i.match(source_code)
+      unless matched
+        raise NodejsException.new("No match key:#{k}")
+      end
+      source_code = source_code.sub(matched.try &.[1] ,Nodejs::Values.convert_js(v)
+		)
     end
     source_code
   end

@@ -95,17 +95,17 @@ describe "Replace from JS raw code to param" do
   it "Replace JS param to Crystal param" do
     code = <<-SRC
       const srv = process.env.SERVER;
-      const quorum = process.env.DB;let password = process.env.PASSWORD
+      const quorum = process.env.DB;const password = process.env.PASSWORD
     SRC
     hash = {
-      "server"   => "http://localhost",
-      "DB"       => "PostgreSQL",
-      "Password" => 11111111390,
+      "srv"      => "http://localhost",
+      "quorum"   => "1000",
+      "password" => 11111111390,
     }
 
     expect = <<-SRC
       const srv = "http://localhost";
-      const quorum = "PostgreSQL";let password = 11111111390
+      const quorum = "1000";const password = 11111111390
     SRC
 		res = Nodejs.replace_params(code, hash)
 		res.should eq expect
@@ -144,8 +144,8 @@ describe "Replace from JS raw code to param" do
 
   it "Replace lower, upper case" do
    code = <<-SRC
-      const srv = process.env.WebServer;
-      const db = process.env.dataBase;
+      const webserver = config.get('webserver');
+      const database    = 'PostgreSQL';
     SRC
 
     hash = {
@@ -154,8 +154,8 @@ describe "Replace from JS raw code to param" do
     }
 
     expect = <<-SRC
-      const srv = "https://example.com";
-      const db = "MySQL";
+      const webserver = "https://example.com";
+      const database    = "MySQL";
     SRC
 		res = Nodejs.replace_params(code, hash)
     res.should eq expect
