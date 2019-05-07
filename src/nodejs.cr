@@ -4,13 +4,11 @@ require "./nodejs/*"
 module Nodejs
   extend self
 
-  @@home_dir = "#{ENV["HOME"]}/.crystal-nodejs"
-
   def eval(source_code : String) : JSON::Any
     # todo: process.wait ? fiber nonblocking
     io = IO::Memory.new
     io_error = IO::Memory.new
-    status = Process.run("ext/libnode", args: {"-e", source_code}, output: io, error: io_error)
+    status = Process.run("#{home_dir}/ext/libnode", args: {"-e", source_code}, output: io, error: io_error)
     unless status.success?
       raise NodejsException.new("Exec libnode: #{io_error.to_s}")
     end
@@ -43,8 +41,12 @@ module Nodejs
     source_code
   end
 
+  def home_dir : String
+    "#{ENV["HOME"]}/.crystal-nodejs"
+  end
+
   def version : Void
-    status = system("ext/libnode -v")
+    status = system("#{home_dir}/ext/libnode -v")
     raise NodejsException.new("libnode version") unless status
   end
 
@@ -64,7 +66,7 @@ module Nodejs
 
   private def display_output(output : String) : Void
     unless output.empty?
-      puts("# -- debug or console.log(non json)) -- :\n#{output}")
+      puts("#### Debug or Log(none json) ####\n#{output}")
     end
   end
 end

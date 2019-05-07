@@ -1,7 +1,7 @@
 module Nodejs
   module Npm
     extend self
-    @@npm = "#{ENV["PWD"]}/ext/npm"
+    @@npm = "#{Nodejs.home_dir}/ext/npm"
 
     def init : Bool
       system("#{@@npm} init --yes")
