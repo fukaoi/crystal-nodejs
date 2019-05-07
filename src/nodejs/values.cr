@@ -4,7 +4,7 @@ module Nodejs::Values
   extend self
 
   def convert_js(v)
-    case(v)
+    case (v)
     when String
       v = %("#{v}")
     when JSON::Any, Hash
@@ -15,7 +15,7 @@ module Nodejs::Values
   end
 
   def convert_crystal(v)
-    case(v)
+    case (v)
     when String
       v = %("#{v}")
     when JSON::Any, Hash

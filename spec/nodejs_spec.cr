@@ -8,7 +8,7 @@ describe "Execute JS code" do
       console.log(json);
     SRC
     res = Nodejs.eval(code)
-		res["message"].should eq mess
+    res["message"].should eq mess
   end
 
   it "Throw error object with non local exit" do
@@ -40,7 +40,7 @@ describe "Execute JS code" do
     }
     SRC
     res = Nodejs.eval(code)
-		res["error_message"].should eq mess
+    res["error_message"].should eq mess
   end
 
   it "Exec setTimeout" do
@@ -53,7 +53,7 @@ describe "Execute JS code" do
     setTimeout(() => {user.sayHi('crystal')}, 2000);
     SRC
     res = Nodejs.eval(code)
-		res.size.should eq 0
+    res.size.should eq 0
   end
 
   it "Exec promise chain" do
@@ -70,7 +70,7 @@ describe "Execute JS code" do
     });
     SRC
     res = Nodejs.eval(code)
-		res["promise"].should eq mess
+    res["promise"].should eq mess
   end
 
   it "Error promise chain" do
@@ -107,10 +107,10 @@ describe "Replace from JS raw code to param" do
       const srv = "http://localhost";
       const quorum = "1000";const password = 11111111390
     SRC
-		res = Nodejs.replace_params(code, hash)
-		res.should eq expect
-		Nodejs.eval(res).size.should eq 0
-	end
+    res = Nodejs.replace_params(code, hash)
+    res.should eq expect
+    Nodejs.eval(res).size.should eq 0
+  end
 
   it "Replace complex JS param to Crystal param" do
     code = <<-SRC
@@ -124,8 +124,8 @@ describe "Replace from JS raw code to param" do
     SRC
 
     hash = {
-      "groups"   => [1,2,3,4],
-      "values"   => {"a" => 10, "b" => "data", "c" => 0.5},
+      "groups" => [1, 2, 3, 4],
+      "values" => {"a" => 10, "b" => "data", "c" => 0.5},
     }
 
     expect = <<-SRC
@@ -137,27 +137,27 @@ describe "Replace from JS raw code to param" do
 
       const values = {"a":10,"b":"data","c":0.5};
     SRC
-		res = Nodejs.replace_params(code, hash)
+    res = Nodejs.replace_params(code, hash)
     res.should eq expect
-		Nodejs.eval(res).size.should eq 0
-	end
+    Nodejs.eval(res).size.should eq 0
+  end
 
   it "Replace lower, upper case" do
-   code = <<-SRC
+    code = <<-SRC
       const webserver = config.get('webserver');
       const database    = 'PostgreSQL';
     SRC
 
     hash = {
       "webserver" => "https://example.com",
-      "database"  => "MySQL"
+      "database"  => "MySQL",
     }
 
     expect = <<-SRC
       const webserver = "https://example.com";
       const database    = "MySQL";
     SRC
-		res = Nodejs.replace_params(code, hash)
+    res = Nodejs.replace_params(code, hash)
     res.should eq expect
   end
 
@@ -167,39 +167,39 @@ describe "Replace from JS raw code to param" do
 end
 
 describe "Extract result data from result string code" do
-	it "Exec extract" do
-		code = <<-SRC
+  it "Exec extract" do
+    code = <<-SRC
 			lslkfkldklsklklfaowpwp
 			10320093903490902o2ioio3i3i3
       '{"result":{"data":7777777777}}'
 			xklx;zxkl0932fijgv09329023333
 		SRC
-		tuple = Nodejs.extract_result(code)
-		tuple[:result]["result"]["data"].should eq 7777777777
-		tuple[:output].empty?.should be_false	
-	end
+    tuple = Nodejs.extract_result(code)
+    tuple[:result]["result"]["data"].should eq 7777777777
+    tuple[:output].empty?.should be_false
+  end
 
-	it "Exec extract in no json data" do
-		code = <<-SRC
+  it "Exec extract in no json data" do
+    code = <<-SRC
 			lslkfkldklsklklfaowpwp
 			10320093903490902o2ioio3i3i3
 			xklx;zxkl0932fijgv09329023333
 		SRC
-		tuple = Nodejs.extract_result(code)
-		tuple[:result].size.should eq 0
-		tuple[:output].empty?.should be_false
-	end
+    tuple = Nodejs.extract_result(code)
+    tuple[:result].size.should eq 0
+    tuple[:output].empty?.should be_false
+  end
 end
 
 describe "Read js code file and Eval js code" do
-	it "read example js file" do
-    res = Nodejs.file_run("spec/file_run.js") 
+  it "read example js file" do
+    res = Nodejs.file_run("spec/file_run.js")
     res["text"].to_s.empty?.should be_false
   end
 
-	it "Not found js file" do
+  it "Not found js file" do
     expect_raises(Nodejs::NodejsException) do
-      Nodejs.file_run("spec/hoge_fuga.js") 
+      Nodejs.file_run("spec/hoge_fuga.js")
     end
   end
 end

@@ -12,7 +12,7 @@ describe Nodejs do
     unless Nodejs::Npm.is_installed?("mathjs")
       Nodejs::Npm.install("mathjs")
     end
-   end
+  end
 
   it "module:ripple-lib" do
     code = <<-SRC
