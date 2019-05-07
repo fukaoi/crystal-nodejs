@@ -11,10 +11,10 @@ HOME_DIR  = $(HOME)/.crystal-nodejs/
 IR := $(shell pwd)
 
 all: $(OBJS)
-	@echo ${BUILD_DIR}
-	$(CC) ${FLAGS} ${SOURCE} -o $(OUT) ${OBJS}
+	# @echo ${BUILD_DIR}
+	# $(CC) ${FLAGS} ${SOURCE} -o $(OUT) ${OBJS}
 	mkdir ${HOME_DIR}
 	cp -r ${BUILD_DIR} ${HOME_DIR}
 
 clean:
-	rm -f $(OBJS) $(OUT)
+	rm -rf ${BUILD_DIR}  

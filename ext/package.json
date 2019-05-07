@@ -1,0 +1,23 @@
+{
+  "name": "crystal-nodejs",
+  "version": "1.0.0",
+  "description": "TODO: Write a description here",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fukaoi/crystal-nodejs.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/fukaoi/crystal-nodejs/issues"
+  },
+  "homepage": "https://github.com/fukaoi/crystal-nodejs#readme"
+}

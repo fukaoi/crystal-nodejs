@@ -8,7 +8,7 @@ module Nodejs
     # todo: process.wait ? fiber nonblocking
     io = IO::Memory.new
     io_error = IO::Memory.new
-    status = Process.run("#{home_dir}/ext/libnode", args: {"-e", source_code}, output: io, error: io_error)
+    status = Process.run("#{setup_node_path} #{home_dir}/ext/libnode", args: {"-e", source_code}, output: io, error: io_error)
     unless status.success?
       raise NodejsException.new("Exec libnode: #{io_error.to_s}")
     end
@@ -62,6 +62,10 @@ module Nodejs
       output = res
     end
     {result: result, output: output}
+  end
+
+  private def setup_node_path : String
+   "NODE_PATH=#{home_dir}/:#{home_dir}/js/" 
   end
 
   private def display_output(output : String) : Void
