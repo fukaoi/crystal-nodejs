@@ -4,19 +4,19 @@ module Nodejs
     @@npm = "#{Nodejs.home_dir}/ext/npm"
 
     def init : Bool
-      system("#{@@npm} init --yes")
+      system("cd #{Nodejs.home_dir}/js && #{@@npm} init --yes")
     end
 
     def is_installed?(package_name : String) : Bool
-      system("#{@@npm} list #{package_name} | grep #{package_name}")
+      system("cd #{Nodejs.home_dir}/js && #{@@npm} list #{package_name} | grep #{package_name}")
     end
 
     def install(package_name : String) : Bool
-      system("#{@@npm} install #{package_name}")
+      system("cd #{Nodejs.home_dir}/js && #{@@npm} install #{package_name}")
     end
 
     def uninstall(package_name : String) : Bool
-      system("#{@@npm} uninstall #{package_name}")
+      system("cd #{Nodejs.home_dir}/js && #{@@npm} uninstall #{package_name}")
     end
 
     def security_check
