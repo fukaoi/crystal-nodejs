@@ -14,6 +14,9 @@ all: $(OBJS)
 	if [ ! -d ${HOME_DIR}/ ]; then \
 		mkdir ${HOME_DIR}/; \
 	fi
+	if [ ! -d ${HOME_DIR}/js ]; then \
+		mkdir ${HOME_DIR}/js; \
+	fi
 	cp -R ${BUILD_DIR} ${HOME_DIR}/
 
 clean:
