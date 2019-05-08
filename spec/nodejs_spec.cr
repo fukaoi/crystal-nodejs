@@ -206,7 +206,7 @@ end
 
 describe "Setup env" do
   it "setup some value" do
-    expected = {"NODE_PATH" => "/home/hoge/:/usr/local/"}
+    expected = {"NODE_PATH" => "./node_modules/:#{ENV["HOME"]}/.crystal-nodejs/js/:/home/hoge/:/usr/local/"}
     res = Nodejs.setup_env(["/home/hoge/", "/usr/local/"])
     res.should eq expected
   end
