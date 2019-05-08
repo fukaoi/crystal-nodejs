@@ -14,10 +14,7 @@ all: $(OBJS)
 	if [ ! -d ${HOME_DIR}/ ]; then \
 		mkdir ${HOME_DIR}/; \
 	fi
-	cp ext/npm ext/npm_copy
-	sed -i "1i #!${HOME_DIR}/ext/libnode" ext/npm_copy 
-	cp -r ${BUILD_DIR} ${HOME_DIR}/
-	mv ${HOME_DIR}/ext/npm_copy ${HOME_DIR}/ext/npm
+	cp -R ${BUILD_DIR} ${HOME_DIR}/
 
 clean:
 	rm -rf ${HOME_DIR}/ext  
