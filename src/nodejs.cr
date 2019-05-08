@@ -4,11 +4,11 @@ require "./nodejs/*"
 module Nodejs
   extend self
 
-  def eval(source_code : String) : JSON::Any
+  def eval(source_code : String, node_path : Array = [] of String) : JSON::Any
     # todo: process.wait ? fiber nonblocking
     io = IO::Memory.new
     io_error = IO::Memory.new
-    status = Process.run("#{setup_node_path} #{home_dir}/ext/libnode", args: {"-e", source_code}, output: io, error: io_error)
+    status = Process.run("#{setup_node_path(node_path)} #{home_dir}/ext/libnode", args: {"-e", source_code}, output: io, error: io_error)
     unless status.success?
       raise NodejsException.new("Exec libnode: #{io_error.to_s}")
     end
@@ -64,8 +64,12 @@ module Nodejs
     {result: result, output: output}
   end
 
-  private def setup_node_path : String
-   "NODE_PATH=#{home_dir}/:#{home_dir}/js/" 
+  def setup_node_path(path : Array(String)) : String
+    if !path.empty?
+      "NODE_PATH=#{path.join(":")}"
+    else
+      ""
+    end
   end
 
   private def display_output(output : String) : Void

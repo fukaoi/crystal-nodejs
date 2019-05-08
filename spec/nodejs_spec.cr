@@ -203,3 +203,11 @@ describe "Read js code file and Eval js code" do
     end
   end
 end
+
+describe "Setup node path" do
+  it "setup some value" do
+    expected = "NODE_PATH=/home/hoge/:/usr/local/"
+    res = Nodejs.setup_node_path(["/home/hoge/", "/usr/local/"])
+    res.should eq expected
+  end
+end
