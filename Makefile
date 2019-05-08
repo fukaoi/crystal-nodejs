@@ -17,4 +17,4 @@ all: $(OBJS)
 	cp -r ${BUILD_DIR} ${HOME_DIR}
 
 clean:
-	rm -rf ${BUILD_DIR}  
+	rm -rf ${HOME_DIR}/ext  
