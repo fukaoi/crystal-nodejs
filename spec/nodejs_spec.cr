@@ -202,6 +202,17 @@ describe "Read js code file and Eval js code" do
       Nodejs.file_run("spec/hoge_fuga.js")
     end
   end
+  
+  it "Load js file" do
+    res = Nodejs.load_jsfile("../ext/package.json")
+    res.empty?.should be_false
+  end
+
+  it "Not found js file" do
+    expect_raises(Nodejs::NodejsException) do
+      Nodejs.load_jsfile("spec/hoge_fuga.js")
+    end
+  end
 end
 
 describe "Setup env" do

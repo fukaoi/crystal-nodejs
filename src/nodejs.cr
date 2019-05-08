@@ -32,6 +32,14 @@ module Nodejs
     eval(File.read(file_path))
   end
 
+  def load_jsfile(file_path : String) : String
+    path = "#{home_dir}/js/#{file_path}"
+    unless File.exists?(path)
+      raise NodejsException.new("File not found: #{path}")
+    end
+    File.read(path)
+  end
+
   def replace_params(
     source_code : String,
     replaces : Hash = {String => String | Int32 | Float32}
@@ -72,7 +80,7 @@ module Nodejs
 
   def setup_env(path : Array(String)) : Hash(String, String)
     node_path = {
-      "NODE_PATH" => "./node_modules/:#{ENV["HOME"]}/.crystal-nodejs/js/"
+      "NODE_PATH" => "./node_modules/:#{ENV["HOME"]}/.crystal-nodejs/js/",
     }
     if !path.empty?
       node_path["NODE_PATH"] = "#{node_path["NODE_PATH"]}:#{path.join(":")}"
