@@ -9,8 +9,9 @@ module Nodejs
     io = IO::Memory.new
     io_error = IO::Memory.new
     status = Process.run(
-      setup_libnode_path(node_path),
+      "#{home_dir}/ext/libnode",
       args: {"-e", source_code},
+      env: setup_env(node_path),
       output: io,
       error: io_error
     )
@@ -69,13 +70,12 @@ module Nodejs
     {result: result, output: output}
   end
 
-  def setup_libnode_path(path : Array(String)) : String
-    cmd = "#{home_dir}/ext/libnode"
+  def setup_env(path : Array(String)) : Hash(String, String)
+    node_path = {"NODE_PATH" => ""}
     if !path.empty?
-      "NODE_PATH=#{path.join(":")} #{cmd}"
-    else
-      cmd  
+      node_path["NODE_PATH"] = path.join(":")
     end
+    node_path
   end
 
   private def display_output(output : String) : Void
