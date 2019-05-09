@@ -7,23 +7,32 @@ OUT			  = ${BUILD_DIR}libnode
 CC	 		  = g++
 FLAGS	 	  = -g -Wl,-rpath=${BUILD_DIR}
 HOME_DIR  = $(HOME)/.crystal-nodejs
+OS = $(shell uname)
 
 all: $(OBJS)
-	@echo ${BUILD_DIR}
-	# $(CC) ${FLAGS} ${SOURCE} -o $(OUT) ${OBJS}
+
+# build libnode
+	@echo OS:${OS}
+
+	@if [ ${OS} = "Linux" ]; then \
+		$(CC) ${FLAGS} ${SOURCE} -o $(OUT) ${OBJS}; \
+	else \
+		echo No support os:${OS}; \
+	fi
+
 # need folder	
-	if [ ! -d ${HOME_DIR}/js ]; then \
+	@if [ ! -d ${HOME_DIR}/js ]; then \
 		mkdir -p ${HOME_DIR}/js; \
 	fi
 
 # rewrite npm path 
-	sed -e "1i #!$(HOME)/.crystal-nodejs/ext/libnode" ext/npm > ext/npm-clone
+	@sed -e "1i #!$(HOME)/.crystal-nodejs/ext/libnode" ext/npm > ext/npm-clone
 
 # ext foloder copy	
-	cp -R ${BUILD_DIR} ${HOME_DIR}/
+	@cp -R ${BUILD_DIR} ${HOME_DIR}/
 
 # replace user customize path npm	
-	cp ${HOME_DIR}/ext/npm-clone ${HOME_DIR}/ext/npm
+	@cp ${HOME_DIR}/ext/npm-clone ${HOME_DIR}/ext/npm
 
 clean:
 	rm -rf ${HOME_DIR}/ext  
