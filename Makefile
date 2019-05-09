@@ -10,7 +10,7 @@ HOME_DIR  = $(HOME)/.crystal-nodejs
 
 all: $(OBJS)
 	@echo ${BUILD_DIR}
-	$(CC) ${FLAGS} ${SOURCE} -o $(OUT) ${OBJS}
+	# $(CC) ${FLAGS} ${SOURCE} -o $(OUT) ${OBJS}
 # need folder	
 	if [ ! -d ${HOME_DIR}/js ]; then \
 		mkdir -p ${HOME_DIR}/js; \
