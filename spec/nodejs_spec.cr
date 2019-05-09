@@ -15,7 +15,7 @@ describe "Execute JS code" do
     code = <<-SRC
       throw new Error('non local exit');
     SRC
-    expect_raises(Nodejs::NodejsException) do
+    expect_raises(Nodejs::JSSideException) do
       Nodejs.eval(code)
     end
   end
@@ -24,7 +24,7 @@ describe "Execute JS code" do
     code = <<-SRC
       return false;
     SRC
-    expect_raises(Nodejs::NodejsException) do
+    expect_raises(Nodejs::JSSideException) do
       Nodejs.eval(code)
     end
   end
@@ -85,7 +85,7 @@ describe "Execute JS code" do
       console.error(error);
     });
     SRC
-    expect_raises(Nodejs::NodejsException, mess) do
+    expect_raises(Nodejs::JSSideException, mess) do
       Nodejs.eval(code)
     end
   end
@@ -198,27 +198,14 @@ describe "Read js code file and Eval js code" do
   end
 
   it "Not found js file" do
-    expect_raises(Nodejs::NodejsException) do
+    expect_raises(Nodejs::CrystalSideException) do
       Nodejs.file_run("spec/hoge_fuga.js")
     end
   end
 
-  it "Load js file" do
-    res = Nodejs.load_jsfile("../ext/package.json")
-    res.empty?.should be_false
-  end
-
   it "Not found js file" do
-    expect_raises(Nodejs::NodejsException) do
+    expect_raises(Nodejs::CrystalSideException) do
       Nodejs.load_jsfile("spec/hoge_fuga.js")
     end
-  end
-end
-
-describe "Setup env" do
-  it "setup some value" do
-    expected = {"NODE_PATH" => "./node_modules/:#{ENV["HOME"]}/.crystal-nodejs/js/:/home/hoge/:/usr/local/"}
-    res = Nodejs.setup_env(["/home/hoge/", "/usr/local/"])
-    res.should eq expected
   end
 end

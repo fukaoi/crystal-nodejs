@@ -16,7 +16,7 @@ module Nodejs
       error: io_error
     )
     unless status.success?
-      raise NodejsException.new("Exec libnode: #{io_error.to_s}")
+      raise JSSideException.new("Exec libnode: #{io_error.to_s}")
     end
     io.close
     io_error.close
@@ -27,7 +27,7 @@ module Nodejs
 
   def file_run(file_path : String) : JSON::Any
     unless File.exists?(file_path)
-      raise NodejsException.new("File not found: #{file_path}")
+      raise CrystalSideException.new("File not found: #{file_path}")
     end
     eval(File.read(file_path))
   end
@@ -35,7 +35,7 @@ module Nodejs
   def load_jsfile(file_path : String) : String
     path = "#{home_dir}/js/#{file_path}"
     unless File.exists?(path)
-      raise NodejsException.new("File not found: #{path}")
+      raise CrystalSideException.new("File not found: #{path}")
     end
     File.read(path)
   end
@@ -47,7 +47,7 @@ module Nodejs
     replaces.each do |k, v|
       matched = /const[\s]*#{k}[\s]*=[\s]*([\[\]\(\)"'a-z0-9\.\-\_]+)/i.match(source_code)
       unless matched
-        raise NodejsException.new("No match key:#{k}")
+        raise CrystalSideException.new("No match key:#{k}")
       end
       source_code = source_code.sub(matched.try &.[1], Nodejs::Values.convert_js(v)
       )
@@ -61,7 +61,7 @@ module Nodejs
 
   def version : Void
     status = system("#{home_dir}/ext/libnode -v")
-    raise NodejsException.new("libnode version") unless status
+    raise CrystalSideException.new("libnode version") unless status
   end
 
   def extract_result(res : String) : NamedTuple(result: JSON::Any, output: String)

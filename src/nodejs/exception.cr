@@ -1,5 +1,7 @@
 module Nodejs
-  class NodejsException < Exception; end
+  class CrystalSideException < Exception; end
+
+  class JSSideException < Exception; end
 
   class ValuesTypeException < Exception; end
 end
