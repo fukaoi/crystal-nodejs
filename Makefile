@@ -17,10 +17,13 @@ all: $(OBJS)
 	fi
 
 # rewrite npm path 
-
+	sed -e "1i #!$(HOME)/.crystal-nodejs/ext/libnode" ext/npm > ext/npm-clone
 
 # ext foloder copy	
 	cp -R ${BUILD_DIR} ${HOME_DIR}/
+
+# replace user customize path npm	
+	cp ${HOME_DIR}/ext/npm-clone ${HOME_DIR}/ext/npm
 
 clean:
 	rm -rf ${HOME_DIR}/ext  
