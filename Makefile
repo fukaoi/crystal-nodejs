@@ -11,12 +11,15 @@ HOME_DIR  = $(HOME)/.crystal-nodejs
 all: $(OBJS)
 	@echo ${BUILD_DIR}
 	$(CC) ${FLAGS} ${SOURCE} -o $(OUT) ${OBJS}
+# need folder	
 	if [ ! -d ${HOME_DIR}/ ]; then \
-		mkdir ${HOME_DIR}/; \
+		mkdir -p ${HOME_DIR}/js; \
 	fi
-	if [ ! -d ${HOME_DIR}/js ]; then \
-		mkdir ${HOME_DIR}/js; \
-	fi
+
+# rewrite npm path 
+
+
+# ext foloder copy	
 	cp -R ${BUILD_DIR} ${HOME_DIR}/
 
 clean:
