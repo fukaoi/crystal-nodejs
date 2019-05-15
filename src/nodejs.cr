@@ -15,7 +15,7 @@ module Nodejs
       output: io,
       error: io_error
     )
-    
+
     io.close
     io_error.close
 
