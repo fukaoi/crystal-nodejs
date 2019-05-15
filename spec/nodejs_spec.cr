@@ -35,12 +35,13 @@ describe "Execute JS code" do
     try {
       throw new Error('#{mess}');
     } catch(e) {
-      const json = JSON.stringify({error_message: e.message})
-      console.log(json);
+      console.error(e);
+      process.exit(1);
     }
     SRC
-    res = Nodejs.eval(code)
-    res["error_message"].should eq mess
+    expect_raises(Nodejs::JSSideException, mess) do
+      Nodejs.eval(code)
+    end
   end
 
   it "Exec setTimeout" do

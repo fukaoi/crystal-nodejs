@@ -15,13 +15,17 @@ module Nodejs
       output: io,
       error: io_error
     )
+    
+    io.close
+    io_error.close
+
+    tuple = extract_result(io.to_s.chomp)
+    display_output(tuple[:output])
+
     unless status.success?
       raise JSSideException.new("Exec libnode: #{io_error.to_s}")
     end
-    io.close
-    io_error.close
-    tuple = extract_result(io.to_s.chomp)
-    display_output(tuple[:output])
+
     tuple[:result]
   end
 
