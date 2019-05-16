@@ -15,13 +15,17 @@ module Nodejs
       output: io,
       error: io_error
     )
+
+    io.close
+    io_error.close
+
+    tuple = extract_result(io.to_s.chomp)
+    display_output(tuple[:output])
+
     unless status.success?
       raise JSSideException.new("Exec libnode: #{io_error.to_s}")
     end
-    io.close
-    io_error.close
-    tuple = extract_result(io.to_s.chomp)
-    display_output(tuple[:output])
+
     tuple[:result]
   end
 
@@ -79,8 +83,9 @@ module Nodejs
   end
 
   def setup_env(path : Array(String)) : Hash(String, String)
+    js_dir = "#{ENV["HOME"]}/.crystal-nodejs/js"
     node_path = {
-      "NODE_PATH" => "./node_modules/:#{ENV["HOME"]}/.crystal-nodejs/js/",
+      "NODE_PATH" => "./:#{js_dir}:#{js_dir}/node_modules:",
     }
     if !path.empty?
       node_path["NODE_PATH"] = "#{node_path["NODE_PATH"]}:#{path.join(":")}"
