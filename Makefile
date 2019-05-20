@@ -34,5 +34,11 @@ all: $(OBJS)
 # replace user customize path npm	
 	@cp ${HOME_DIR}/ext/npm-clone ${HOME_DIR}/ext/npm
 
+# alias libnode to node
+	@ln -s  ${BINARY_DIR}/libnode ${BINARY_DIR}/node
+
+# Setting node path for npm
+	@${BINARY_DIR}/npm config set setscripts-prepend-node-path ${BINARY_DIR}/
+
 clean:
 	rm -rf ${HOME_DIR}/ext  
