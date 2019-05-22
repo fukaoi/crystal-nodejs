@@ -23,7 +23,7 @@ module Nodejs
     display_output(tuple[:output])
 
     unless status.success?
-      raise JSSideException.new("Exec libnode: #{io_error.to_s}")
+      raise JSSideException.new("Eval: #{io_error.to_s}")
     end
 
     tuple[:result]
@@ -70,13 +70,12 @@ module Nodejs
 
   def extract_result(res : String) : NamedTuple(result: JSON::Any, output: String)
     matched = /\{.*\:.*\}/.match(res).try &.[0]
-    result : JSON::Any
+    result = JSON.parse("{}")
     output : String
     if matched != nil
       result = JSON.parse(matched.to_s)
       output = res.split(matched).join
     else
-      result = JSON.parse("{}")
       output = res
     end
     {result: result, output: output}
