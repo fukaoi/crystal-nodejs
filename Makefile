@@ -42,7 +42,8 @@ all: $(OBJS)
 	fi
 
 # Setting node path for npm
-	@${BINARY_DIR}/npm config set setscripts-prepend-node-path ${BINARY_DIR}/
+	@${BINARY_DIR}/npm config set scripts-prepend-node-path true
+
 
 # npm install for package.json
 	@if [ -e ${JS_DIR}/package.json -o -e ${JS_DIR}/package-lock.json ]; then \
