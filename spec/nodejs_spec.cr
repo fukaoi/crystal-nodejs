@@ -1,14 +1,37 @@
 require "./spec_helper"
 
-describe "Execute JS code" do
-  it "Console output" do
-    mess = "spec"
-    code = <<-SRC
-      const json = JSON.stringify({message: "#{mess}"});
-      console.log(json);
-    SRC
+describe Nodejs do
+
+  it "Exec eval with plain text" do
+    code = <<-CODE
+    toCrystal("spec")
+    CODE
     res = Nodejs.eval(code)
-    res["message"].should eq mess
+    res.should eq "spec"
+  end
+
+  it "Exec eval with Number" do
+    code = <<-CODE
+    toCrystal(123)
+    CODE
+    res = Nodejs.eval(code)
+    res.should eq 123
+  end
+
+  it "Exec eval with JS Object" do
+    code = <<-CODE
+    toCrystal({data:"spec"})
+    CODE
+    res = Nodejs.eval(code)
+    res["data"].should eq "spec"
+  end
+
+  it "Exec eval with JSON" do
+    code = <<-CODE
+    toCrystal('{"data":"spec"}')
+    CODE
+    res = Nodejs.eval(code)
+    res["data"].should eq "spec"
   end
 
   it "Throw error object with non local exit" do
@@ -64,8 +87,7 @@ describe "Execute JS code" do
       resolve(777);
     });
     promise.then((value) => {
-      const json = JSON.stringify({promise: value})
-      console.log(json);
+      toCrystal({promise: value});
     }).catch((error) => {
       console.error(error);
     });
@@ -172,11 +194,11 @@ describe "Extract result data from result string code" do
     code = <<-SRC
 			lslkfkldklsklklfaowpwp
 			10320093903490902o2ioio3i3i3
-      '{"result":{"data":7777777777}}'
+      '{"to_crystal":{"data":{"number":7777777777}}}'
 			xklx;zxkl0932fijgv09329023333
 		SRC
     tuple = Nodejs.extract_result(code)
-    tuple[:result]["result"]["data"].should eq 7777777777
+    tuple[:result]["data"]["number"].should eq 7777777777
     tuple[:output].empty?.should be_false
   end
 

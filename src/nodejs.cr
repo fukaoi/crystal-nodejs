@@ -10,7 +10,7 @@ module Nodejs
     io_error = IO::Memory.new
     status = Process.run(
       "#{home_dir}/ext/libnode",
-      args: {"-e", source_code},
+      args: {"-e", "#{Values.set_return_js} #{source_code}"},
       env: setup_env(node_path),
       output: io,
       error: io_error
@@ -53,7 +53,7 @@ module Nodejs
       unless matched
         raise CrystalSideException.new("No match key:#{k}")
       end
-      source_code = source_code.sub(matched.try &.[1], Nodejs::Values.convert_js(v)
+      source_code = source_code.sub(matched.try &.[1], Values.convert_js(v)
       )
     end
     source_code
@@ -69,11 +69,11 @@ module Nodejs
   end
 
   def extract_result(res : String) : NamedTuple(result: JSON::Any, output: String)
-    matched = /\{.*\:.*\}/.match(res).try &.[0]
+    matched = /\{"#{Values::RETURN_KEY_NAME}"\:.*\}/.match(res).try &.[0]
     result = JSON.parse("{}")
     output : String
     if matched != nil
-      result = JSON.parse(matched.to_s)
+      result = JSON.parse(matched.to_s)[Values::RETURN_KEY_NAME]
       output = res.split(matched).join
     else
       output = res

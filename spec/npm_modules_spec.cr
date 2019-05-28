@@ -26,8 +26,7 @@ describe Nodejs do
         const myAddress = 'rJumr5e1HwiuV543H7bqixhtFreChWTaHH';
         return api.getAccountInfo(myAddress);
       }).then(info => {
-        const json = JSON.stringify({seq: info.sequence})
-        console.log(json);
+        toCrystal({seq: info.sequence})
       }).then(() =>{
         return api.disconnect();
       }).then(() => {
@@ -49,8 +48,7 @@ describe Nodejs do
     .forAccount(accountId)
     .call()
     .then(function (page) {
-        const json = JSON.stringify({hash: page.records[0].hash})
-        console.log(json)
+      toCrystal({hash: page.records[0].hash})
     })
     .catch(function (err) {
         console.log(err);

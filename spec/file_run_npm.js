@@ -21,4 +21,4 @@ const res = math.chain(3)
     .multiply(2)
     .done() // 14
 
-console.log(JSON.stringify({result: res}));
+toCrystal({result: res});
