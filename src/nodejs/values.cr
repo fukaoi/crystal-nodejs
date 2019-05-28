@@ -24,4 +24,12 @@ module Nodejs::Values
       v
     end
   end
+
+  def set_return_js() : String
+    <<-CODE
+    function toCrystal(result) {
+      console.log('{"to_crystal":result}');
+    }
+    CODE
+  end
 end
