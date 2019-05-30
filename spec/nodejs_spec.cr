@@ -194,7 +194,7 @@ describe "Extract result data from result string code" do
     code = <<-SRC
 			lslkfkldklsklklfaowpwp
 			10320093903490902o2ioio3i3i3
-      '{"to_crystal":{"data":{"number":7777777777}}}'
+      '{"#{Nodejs::Values::RETURN_KEY_NAME}":{"data":{"number":7777777777}}}'
 			xklx;zxkl0932fijgv09329023333
 		SRC
     tuple = Nodejs.extract_result(code)

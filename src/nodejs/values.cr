@@ -3,7 +3,7 @@ require "json"
 module Nodejs::Values
   extend self
 
-  RETURN_KEY_NAME = "to_crystal"
+  RETURN_KEY_NAME = "toCrystal"
 
   def convert_js(v)
     case (v)
