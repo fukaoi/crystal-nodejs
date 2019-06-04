@@ -1,7 +1,6 @@
 require "./spec_helper"
 
 describe Nodejs do
-
   it "Exec eval with plain text" do
     code = <<-CODE
     toCrystal("spec")

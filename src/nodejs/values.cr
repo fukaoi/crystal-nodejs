@@ -27,7 +27,7 @@ module Nodejs::Values
     end
   end
 
-  def set_return_js() : String
+  def set_return_js : String
     <<-CODE
     function toCrystal(result) {
       try {

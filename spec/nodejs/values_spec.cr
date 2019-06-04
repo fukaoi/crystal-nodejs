@@ -37,7 +37,7 @@ describe "convert_jss" do
   end
 
   it "Set JS function that return to crystal" do
-    res = Nodejs::Values.set_return_js()
+    res = Nodejs::Values.set_return_js
     res.empty?.should be_false
   end
 end
