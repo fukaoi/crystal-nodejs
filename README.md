@@ -1,6 +1,11 @@
 # crystal-nodejs
 
-TODO: Write a description here
+Node.js engine for crystal-lang.  JS code and npm module executes on crystal-nodejs, AND don't need to install node.js binary. 
+
+## Supported OS
+
+- Linux(Ubuntu16.04, 18.04)
+- MacOSX(Processing)
 
 ## Installation
 
@@ -8,8 +13,8 @@ TODO: Write a description here
 
    ```yaml
    dependencies:
-     crystal-nodejs:
-       github: your-github-user/crystal-nodejs
+     nodejs:
+       github: fukaoi/crystal-nodejs
    ```
 
 2. Run `shards install`
@@ -17,7 +22,7 @@ TODO: Write a description here
 ## Usage
 
 ```crystal
-require "crystal-nodejs"
+require "nodejs"
 ```
 
 TODO: Write usage instructions here
@@ -28,7 +33,7 @@ TODO: Write development instructions here
 
 ## Contributing
 
-1. Fork it (<https://github.com/your-github-user/crystal-nodejs/fork>)
+1. Fork it (<https://github.com/fukaoi/crystal-nodejs/fork>)
 2. Create your feature branch (`git checkout -b my-new-feature`)
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
@@ -36,4 +41,4 @@ TODO: Write development instructions here
 
 ## Contributors
 
-- [fukaoi](https://github.com/your-github-user) - creator and maintainer
+- [fukaoi](https://github.com/fukaoi) - creator and maintainer
