@@ -7,7 +7,15 @@ HIDDEN_DIR   = $(HOME)/.crystal-nodejs
 NODE_VERSION = v10.16.0
 OS           = $(shell uname)
 
-all: $(OBJS)
+
+
+.PHONY: all
+all:
+	make nodejs
+	make build
+
+.PHONY: build
+build:
 
 # build libnode
 	@echo OS:${OS}
@@ -22,36 +30,37 @@ all: $(OBJS)
 		-std=c++11 -g -Wl,-rpath=${NODE_LIB_DIR} \
 		-I/tmp/${NODE_VERSION}/include/node/ \
 		${EXT_DIR}/libnode.cc ${SOURCE} -o \
-		${EXT_DIR}/${NODE_VERSION}/bin/node \
+		${NODE_BIN_DIR}/node \
 		${NODE_LIB_DIR}/libnode.so.64; \
 	else \
 		echo No support os:${OS}; \
 	fi
 
 # rewrite npm path 
-# @sed -e "1i #!$(HOME)/.crystal-nodejs/ext/node" ext/npm > ext/npm-clone
+	@sed -i "1d" ${NODE_LIB_DIR}/node_modules/npm/bin/npm-cli.js
+	@sed -i -e "1i #!${HIDDEN_DIR}/bin/node" ${NODE_LIB_DIR}/node_modules/npm/bin/npm-cli.js
 
-# ext foloder copy	
-# @cp -R ${EXT_DIR} ${HIDDEN_DIR}/
+# symbolic bin/ lib/	
+	@if [ ! -d ${HIDDEN_DIR}/bin ]; then \
+	  cp -r ${NODE_BIN_DIR} ${HIDDEN_DIR}/; \
+  fi	
 
-# replace user customize path npm	
-# @cp ${EXT_DIR}/npm-clone ${EXT_DIR}/npm
-
-# alias libnode to node
-# @if [ ! -e ${EXT_DIR}/node ]; then \
-ln -s  ${EXT_DIR}/libnode ${EXT_DIR}/node; \
-fi
+	@if [ ! -d ${HIDDEN_DIR}/lib ]; then \
+	  cp -r ${NODE_LIB_DIR} ${HIDDEN_DIR}/; \
+	  cp -r ${NODE_LIB_DIR}/node_modules/npm/* ${HIDDEN_DIR}/lib/; \
+  fi	
 
 # Setting node path for npm
-# @${EXT_DIR}/npm config set scripts-prepend-node-path true
+	@${HIDDEN_DIR}/bin/npm config set scripts-prepend-node-path true
 
 
 # npm install for package.json
-# @if [ -e ${HIDDEN_DIR}/js/package.json -o -e ${HIDDEN_DIR}/js/package-lock.json ]; then \
-cd ${HIDDEN_DIR}/js && ${HIDDEN_DIR}/ext/npm i; \
-fi	
+	@if [ -e ${HIDDEN_DIR}/js/package.json ]; then \
+		cd ${HIDDEN_DIR}/js && ${HIDDEN_DIR}/bin/npm i; \
+	fi	
 
-build:
+.PHONY: nodejs
+nodejs:
 
 	@if [ ! -d /tmp/node/ ]; then \
 		cd /tmp && git clone git@github.com:nodejs/node.git; \
@@ -67,14 +76,11 @@ build:
 
 	cd /tmp/node && make -j4  && make install
 
-	@if [ ! -d ${EXT_DIR}/${NODE_VERSION} ]; then \
-		mkdir ${EXT_DIR}/${NODE_VERSION}; \
-	fi
+	rm -rf ${EXT_DIR}/${NODE_VERSION} 
+	mkdir ${EXT_DIR}/${NODE_VERSION}
 
 	@cp -r /tmp/${NODE_VERSION}/bin ${NODE_BIN_DIR}
 	@cp -r /tmp/${NODE_VERSION}/lib ${NODE_LIB_DIR}	
 
 clean:
 	rm -rf ${HIDDEN_DIR}/  
-	rm -rf /tmp/node
-	rm -rf /tmp/${NODE_VERSION}
