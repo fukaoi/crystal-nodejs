@@ -21,7 +21,6 @@ script:
   - export CRYSTAL_PATH="/usr/local/lib/crystal/share/crystal/src:lib" && crystal tool format spec src --check 
   - make build
   - crystal spec 
-  # - echo PASS_VERIFICATION=${PASS_VERIFICATION}  
 
 cache:
   directories:
