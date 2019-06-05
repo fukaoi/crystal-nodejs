@@ -1,12 +1,13 @@
 CRYSTAL_NODEJS_DIR := $(abspath $(dir $(lastword $(MAKEFILE_LIST))))
 
 EXT_DIR      = ${CRYSTAL_NODEJS_DIR}/ext
+NODE_BIN_DIR = ${EXT_DIR}/${NODE_VERSION}/bin
+NODE_LIB_DIR = ${EXT_DIR}/${NODE_VERSION}/lib
 HIDDEN_DIR   = $(HOME)/.crystal-nodejs
-OBJS         = ${EXT_DIR}/node_main.o ${EXT_DIR}/${NODE_VERSION}/lib/libnode.so.64
 SOURCE       = ${EXT_DIR}/libnode.c
 OUT          = ${EXT_DIR}/${NODE_VERSION}/bin/node
 CC           = g++
-FLAGS	 	  	 = -g -Wl,-rpath=${EXT_DIR}
+FLAGS	 	  	 = -g -Wl,-rpath=${NODE_LIB_DIR}
 NODE_VERSION = v10.16.0
 OS           = $(shell uname)
 
@@ -21,7 +22,9 @@ all: $(OBJS)
 	fi
 
 	@if [ ${OS} = "Linux" ]; then \
-		$(CC) ${FLAGS} ${SOURCE} -o $(OUT) ${OBJS}; \
+		$(CC) ${FLAGS} ${SOURCE} -o \
+	  $(OUT) ${NODE_LIB_DIR}/node_main.o \
+		${NODE_LIB_DIR}/libnode.so.64; \
 	else \
 		echo No support os:${OS}; \
 	fi
@@ -69,8 +72,9 @@ build:
 		mkdir ${EXT_DIR}/${NODE_VERSION}; \
 	fi
 
-	@cp -r  /tmp/${NODE_VERSION}/bin ${EXT_DIR}/${NODE_VERSION}/
-	@cp -r /tmp/${NODE_VERSION}/lib  ${EXT_DIR}/${NODE_VERSION}/	
+	@cp -r /tmp/${NODE_VERSION}/bin ${NODE_BIN_DIR}
+	@cp -r /tmp/${NODE_VERSION}/lib ${NODE_LIB_DIR}	
+	@cp /tmp/node/out/Release/obj.target/node/src/node_main.o ${NODE_LIB_DIR}
 
 clean:
 	rm -rf ${HIDDEN_DIR}/  
