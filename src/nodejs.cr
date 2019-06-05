@@ -4,12 +4,14 @@ require "./nodejs/*"
 module Nodejs
   extend self
 
+  NODE_PATH = "#{home_dir}/bin/node"
+
   def eval(source_code : String, node_path : Array = [] of String) : JSON::Any
     # todo: process.wait ? fiber nonblocking
     io = IO::Memory.new
     io_error = IO::Memory.new
     status = Process.run(
-      "#{home_dir}/ext/libnode",
+      NODE_PATH,
       args: {"-e", "#{Values.set_return_js} #{source_code}"},
       env: setup_env(node_path),
       output: io,
@@ -64,8 +66,8 @@ module Nodejs
   end
 
   def version : Void
-    status = system("#{home_dir}/ext/libnode -v")
-    raise CrystalSideException.new("libnode version") unless status
+    status = system("#{NODE_PATH} -v")
+    raise CrystalSideException.new("node version") unless status
   end
 
   def extract_result(res : String) : NamedTuple(result: JSON::Any, output: String)

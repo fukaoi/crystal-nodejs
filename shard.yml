@@ -11,7 +11,7 @@ targets:
     main: src/nodejs.cr  
 
 scripts:
-  postinstall: make 
+  postinstall: make build
 
 development_dependencies:
   ameba:
