@@ -2,7 +2,7 @@ CRYSTAL_NODEJS_DIR := $(abspath $(dir $(lastword $(MAKEFILE_LIST))))
 
 EXT_DIR      = ${CRYSTAL_NODEJS_DIR}/ext
 HIDDEN_DIR   = $(HOME)/.crystal-nodejs
-OBJS         = ${EXT_DIR}/node_main.o ${EXT_DIR}/libnode.so.64
+OBJS         = ${EXT_DIR}/node_main.o ${EXT_DIR}/${NODE_VERSION}/lib/libnode.so.64
 SOURCE       = ${EXT_DIR}/libnode.c
 OUT          = ${EXT_DIR}/${NODE_VERSION}/bin/node
 CC           = g++
