@@ -19,7 +19,7 @@ script:
   - sudo apt-get -qq update && sudo apt-get -qq install -y libssl-dev libxml2-dev libyaml-dev libgmp-dev libreadline-dev libevent-dev
   - export CRYSTAL_PATH="/usr/local/lib/crystal/share/crystal/src:lib" && shards update
   - export CRYSTAL_PATH="/usr/local/lib/crystal/share/crystal/src:lib" && crystal tool format spec src --check 
-  - make
+  - make build
   - crystal spec 
   # - echo PASS_VERIFICATION=${PASS_VERIFICATION}  
 

@@ -63,7 +63,7 @@ build:
 nodejs:
 
 	@if [ ! -d /tmp/node/ ]; then \
-		cd /tmp && git clone git@github.com:nodejs/node.git; \
+		cd /tmp && git clone https://github.com/nodejs/node.git; \
 	fi
 
 	@cd /tmp/node && git checkout ${NODE_VERSION}
