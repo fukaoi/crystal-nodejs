@@ -26,3 +26,4 @@ script:
 cache:
   directories:
     - .shards
+    - /tmp/node
