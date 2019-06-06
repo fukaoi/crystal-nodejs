@@ -31,14 +31,14 @@ build:
 		${EXT_DIR}/libnode.cc ${SOURCE} -o \
 		${NODE_BIN_DIR}/node \
 		${NODE_LIB_DIR}/libnode.so.64; \
-  elif [ ${OS} = "Darwin" ]: then \
+  elif [ ${OS} = "Darwin" ]; then \
 		g++ \
 		-std=c++11 -g -Wl,-rpath ${NODE_LIB_DIR} \
 		-I/tmp/${NODE_VERSION}/include/node/ \
 		${EXT_DIR}/libnode.cc ${SOURCE} -o \
 		${NODE_BIN_DIR}/node \
-		${NODE_LIB_DIR}/libnode.so.64.dylib; \
-	else 
+		${NODE_LIB_DIR}/libnode.64.dylib; \
+  else \
 		echo "Sorry,,,No support OS."; \
 		exit 0; \
 	fi
