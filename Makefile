@@ -6,12 +6,24 @@ NODE_LIB_DIR = ${EXT_DIR}/${NODE_VERSION}/lib
 HIDDEN_DIR   = $(HOME)/.crystal-nodejs
 NODE_VERSION = v10.16.0
 OS           = $(shell uname)
+LINUX_SO     = libnode.so.64
+MAC_OSX_SO   = libnode.64.dylib
 
 
 .PHONY: all
 all:
-	make nodejs
+
+	@if [ ${OS} = "Linux" ] && [ ! -e ${NODE_LIB_DIR}/${LINUX_SO} ]; then \
+		make nodejs; \
+	elif [ ${OS} = "Darwin" ] && [ ! -e ${NODE_LIB_DIR}/${MAC_OSX_SO} ]; then \
+		make nodejs; \
+	else \
+		echo "Sorry,,,No support OS."; \
+		exit 0; \
+	fi
+
 	make build
+
 
 .PHONY: build
 build:
@@ -30,14 +42,14 @@ build:
 		-I/tmp/${NODE_VERSION}/include/node/ \
 		${EXT_DIR}/libnode.cc ${SOURCE} -o \
 		${NODE_BIN_DIR}/node \
-		${NODE_LIB_DIR}/libnode.so.64; \
+		${NODE_LIB_DIR}/${LINUX_SO}; \
   elif [ ${OS} = "Darwin" ]; then \
 		g++ \
 		-std=c++11 -g -Wl,-rpath ${NODE_LIB_DIR} \
 		-I/tmp/${NODE_VERSION}/include/node/ \
 		${EXT_DIR}/libnode.cc ${SOURCE} -o \
 		${NODE_BIN_DIR}/node \
-		${NODE_LIB_DIR}/libnode.64.dylib; \
+		${NODE_LIB_DIR}/${MAC_OSX_SO}; \
   else \
 		echo "Sorry,,,No support OS."; \
 		exit 0; \
