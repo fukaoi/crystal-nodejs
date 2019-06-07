@@ -17,9 +17,6 @@ all:
 		make nodejs; \
 	elif [ ${OS} = "Darwin" ] && [ ! -e ${NODE_LIB_DIR}/${MAC_OSX_SO} ]; then \
 		make nodejs; \
-	else \
-		echo "Sorry,,,No support OS."; \
-		exit 0; \
 	fi
 
 	make build
