@@ -14,6 +14,7 @@ MAC_OSX_SO       = libnode.64.dylib
 
 .PHONY: all
 all:
+
 	make build
 
 .PHONY: build
