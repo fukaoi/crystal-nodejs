@@ -4,7 +4,7 @@ EXT_DIR          = ${CRYSTAL_NODEJS_DIR}/ext
 NODE_BIN_DIR     = ${EXT_DIR}/${NODE_VERSION}/bin
 NODE_LIB_DIR     = ${EXT_DIR}/${NODE_VERSION}/lib
 NODE_INCLUDE_DIR = ${EXT_DIR}/${NODE_VERSION}/include
-NODE_OBJECT_DIR  = ${EXT_DIR}/${NODE_VERSION}/obj
+OBJECT_DIR       = ${EXT_DIR}/obj/${NODE_VERSION}/
 HIDDEN_DIR       = $(HOME)/.crystal-nodejs
 NODE_VERSION     = v10.16.0
 OS               = $(shell uname)
@@ -14,13 +14,7 @@ MAC_OSX_SO       = libnode.64.dylib
 
 .PHONY: all
 all:
-
-	@if [ ! -d ${NODE_BIN_DIR}/ ] || [ ! -d ${NODE_LIB_DIR}/ ] || [ ! -d ${NODE_INCLUDE_DIR}/ ]; then \
-		make nodejs; \
-	fi
-
 	make build
-
 
 .PHONY: build
 build:
@@ -39,18 +33,18 @@ build:
 
 	@if [ ${OS} = "Linux" ]; then \
 		g++ \
-		-std=c++11 -g -Wl,-rpath=${NODE_OBJECT_DIR} \
+		-std=c++11 -g -Wl,-rpath=${OBJECT_DIR} \
 		-I${NODE_INCLUDE_DIR}/node/ \
 		${EXT_DIR}/libnode.cc ${SOURCE} -o \
 		${HIDDEN_DIR}/bin/node \
-		${NODE_OBJECT_DIR}/${LINUX_SO}; \
+		${OBJECT_DIR}/${LINUX_SO}; \
   elif [ ${OS} = "Darwin" ]; then \
 		g++ \
-		-std=c++11 -g -Wl,-rpath ${NODE_OBJECT_DIR} \
+		-std=c++11 -g -Wl,-rpath ${OBJECT_DIR} \
 		-I${NODE_INCLUDE_DIR}/node/ \
 		${EXT_DIR}/libnode.cc ${SOURCE} -o \
 		${HIDDEN_DIR}/bin/node \
-		${NODE_OBJECT_DIR}/${MAC_OSX_SO}; \
+		${OBJECT_DIR}/${MAC_OSX_SO}; \
   else \
 		echo "Sorry,,,No support OS."; \
 		exit 0; \
@@ -88,16 +82,26 @@ nodejs:
 		mkdir /tmp/${NODE_VERSION}; \
 	fi
 
+	@if [ ! -d ${OBJECT_DIR} ]; then \
+		mkdir -p ${OBJECT_DIR}; \
+	fi
+
 	cd /tmp/node && ./configure --shared --prefix=/tmp/${NODE_VERSION}
 
 	cd /tmp/node && make -j5  && make install
 
-	rm -rf ${EXT_DIR}/${NODE_VERSION} 
-	mkdir ${EXT_DIR}/${NODE_VERSION}
+	@rm -rf ${EXT_DIR}/${NODE_VERSION} 
+	@mkdir ${EXT_DIR}/${NODE_VERSION}
 
 	@cp -r /tmp/${NODE_VERSION}/bin ${NODE_BIN_DIR}
 	@cp -r /tmp/${NODE_VERSION}/lib ${NODE_LIB_DIR}	
 	@cp -r /tmp/${NODE_VERSION}/include ${NODE_INCLUDE_DIR}	
+
+	@if [ ${OS} = "Linux" ]; then \
+		mv /tmp/${NODE_VERSION}/lib/${LINUX_SO} ${OBJECT_DIR}; \
+  elif [ ${OS} = "Darwin" ]; then \
+		mv /tmp/${NODE_VERSION}/lib/${MAC_OSX_SO} ${OBJECT_DIR}; \
+	fi
 
 clean:
 	rm -rf ${HIDDEN_DIR}/  
