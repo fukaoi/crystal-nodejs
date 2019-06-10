@@ -33,7 +33,6 @@ build:
 
 	@if [ ! -d ${HIDDEN_DIR}/lib ]; then \
 	  cp -r ${NODE_LIB_DIR} ${HIDDEN_DIR}/; \
-	  cp -r ${NODE_LIB_DIR}/node_modules/npm/* ${HIDDEN_DIR}/lib/; \
 		cp ${OBJECT_DIR}/${LINUX_SO} ${HIDDEN_DIR}/lib/; \
   fi	
 
