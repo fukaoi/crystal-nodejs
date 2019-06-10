@@ -33,28 +33,28 @@ build:
 		mkdir -p ${HIDDEN_DIR}/js; \
 	fi
 
+	@if [ ! -d ${HIDDEN_DIR}/bin ]; then \
+	  cp -r ${NODE_BIN_DIR} ${HIDDEN_DIR}/; \
+  fi	
+
 	@if [ ${OS} = "Linux" ]; then \
 		g++ \
 		-std=c++11 -g -Wl,-rpath=${NODE_OBJECT_DIR} \
 		-I${NODE_INCLUDE_DIR}/node/ \
 		${EXT_DIR}/libnode.cc ${SOURCE} -o \
-		${NODE_BIN_DIR}/node \
+		${HIDDEN_DIR}/bin/node \
 		${NODE_OBJECT_DIR}/${LINUX_SO}; \
   elif [ ${OS} = "Darwin" ]; then \
 		g++ \
 		-std=c++11 -g -Wl,-rpath ${NODE_OBJECT_DIR} \
 		-I${NODE_INCLUDE_DIR}/node/ \
 		${EXT_DIR}/libnode.cc ${SOURCE} -o \
-		${NODE_BIN_DIR}/node \
+		${HIDDEN_DIR}/bin/node \
 		${NODE_OBJECT_DIR}/${MAC_OSX_SO}; \
   else \
 		echo "Sorry,,,No support OS."; \
 		exit 0; \
 	fi
-
-	@if [ ! -d ${HIDDEN_DIR}/bin ]; then \
-	  cp -r ${NODE_BIN_DIR} ${HIDDEN_DIR}/; \
-  fi	
 
 	@if [ ! -d ${HIDDEN_DIR}/lib ]; then \
 	  cp -r ${NODE_LIB_DIR} ${HIDDEN_DIR}/; \
