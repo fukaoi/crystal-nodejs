@@ -31,16 +31,22 @@ build:
 	  cp -r ${NODE_BIN_DIR} ${HIDDEN_DIR}/; \
   fi	
 
+	@if [ ! -d ${HIDDEN_DIR}/lib ]; then \
+	  cp -r ${NODE_LIB_DIR} ${HIDDEN_DIR}/; \
+	  cp -r ${NODE_LIB_DIR}/node_modules/npm/* ${HIDDEN_DIR}/lib/; \
+		cp ${OBJECT_DIR}/${LINUX_SO} ${HIDDEN_DIR}/lib/; \
+  fi	
+
 	@if [ ${OS} = "Linux" ]; then \
 		g++ \
-		-std=c++11 -g -Wl,-rpath=${OBJECT_DIR} \
+		-std=c++11 -g -Wl,-rpath=${HIDDEN_DIR}/lib \
 		-I${NODE_INCLUDE_DIR}/node/ \
 		${EXT_DIR}/libnode.cc ${SOURCE} -o \
 		${HIDDEN_DIR}/bin/node \
 		${OBJECT_DIR}/${LINUX_SO}; \
   elif [ ${OS} = "Darwin" ]; then \
 		g++ \
-		-std=c++11 -g -Wl,-rpath ${OBJECT_DIR} \
+		-std=c++11 -g -Wl,-rpath ${HIDDEN_DIR}/lib \
 		-I${NODE_INCLUDE_DIR}/node/ \
 		${EXT_DIR}/libnode.cc ${SOURCE} -o \
 		${HIDDEN_DIR}/bin/node \
@@ -49,11 +55,6 @@ build:
 		echo "Sorry,,,No support OS."; \
 		exit 0; \
 	fi
-
-	@if [ ! -d ${HIDDEN_DIR}/lib ]; then \
-	  cp -r ${NODE_LIB_DIR} ${HIDDEN_DIR}/; \
-	  cp -r ${NODE_LIB_DIR}/node_modules/npm/* ${HIDDEN_DIR}/lib/; \
-  fi	
 
 # rewrite npm path 
 	@sed -i "1d" ${HIDDEN_DIR}/lib/node_modules/npm/bin/npm-cli.js
