@@ -1,19 +1,23 @@
 CRYSTAL_NODEJS_DIR := $(abspath $(dir $(lastword $(MAKEFILE_LIST))))
-
-EXT_DIR          = ${CRYSTAL_NODEJS_DIR}/ext
-NODE_BIN_DIR     = ${EXT_DIR}/${NODE_VERSION}/bin
-NODE_LIB_DIR     = ${EXT_DIR}/${NODE_VERSION}/lib
-NODE_INCLUDE_DIR = ${EXT_DIR}/${NODE_VERSION}/include
-OBJECT_DIR       = ${EXT_DIR}/obj/${NODE_VERSION}
-HIDDEN_DIR       = $(HOME)/.crystal-nodejs
-NODE_VERSION     = v10.16.0
-OS               = $(shell uname)
-LINUX_SO         = libnode.so.64
-MAC_OSX_SO       = libnode.64.dylib
+EXT_DIR            = ${CRYSTAL_NODEJS_DIR}/ext
+NODE_BIN_DIR       = ${EXT_DIR}/${NODE_VERSION}/bin
+NODE_LIB_DIR       = ${EXT_DIR}/${NODE_VERSION}/lib
+NODE_INCLUDE_DIR   = ${EXT_DIR}/${NODE_VERSION}/include
+OBJECT_DIR         = ${EXT_DIR}/obj/${NODE_VERSION}
+HIDDEN_DIR         = $(HOME)/.crystal-nodejs
+NODE_VERSION       = v10.16.0
+OS                 := $(shell uname)
+SHARED_OBJECT      := $(shell if [ ${OS} = "Linux" ]; then echo libnode.so.64; elif [ ${OS} = "Darwin" ]; then echo libnode.64.dylib; fi)
+BUILD_OPTION       := $(shell if [ ${OS} = "Linux" ]; then echo -rpath=${HIDDEN_DIR}/lib; elif [ ${OS} = "Darwin" ]; then echo -rpath ${HIDDEN_DIR}/lib; fi)
 
 
 .PHONY: all
-all:
+all: 
+
+	@if [ ! ${OS} = "Linux" ] && [ ! ${OS} = "Darwin" ]; then \
+		@echo "Not supported os"; \
+		exit 0; \
+	fi
 
 	make build
 
@@ -36,25 +40,14 @@ build:
 	  cp -r ${NODE_LIB_DIR} ${HIDDEN_DIR}/; \
 		cp ${OBJECT_DIR}/${LINUX_SO} ${HIDDEN_DIR}/lib/; \
   fi	
-
-	@if [ ${OS} = "Linux" ]; then \
-		g++ \
-		-std=c++11 -g -Wl,-rpath=${HIDDEN_DIR}/lib \
+  
+# build node binary
+	@g++ \
+		-std=c++11 -g -Wl,${BUILD_OPTION} \
 		-I${NODE_INCLUDE_DIR}/node/ \
 		${EXT_DIR}/libnode.cc ${SOURCE} -o \
 		${HIDDEN_DIR}/bin/node \
-		${OBJECT_DIR}/${LINUX_SO}; \
-  elif [ ${OS} = "Darwin" ]; then \
-		g++ \
-		-std=c++11 -g -Wl,-rpath ${HIDDEN_DIR}/lib \
-		-I${NODE_INCLUDE_DIR}/node/ \
-		${EXT_DIR}/libnode.cc ${SOURCE} -o \
-		${HIDDEN_DIR}/bin/node \
-		${OBJECT_DIR}/${MAC_OSX_SO}; \
-  else \
-		echo "Sorry,,,No support OS."; \
-		exit 0; \
-	fi
+		${OBJECT_DIR}/${SHARED_OBJECT}; \
 
 # rewrite npm path 
 	@sed -i "1d" ${HIDDEN_DIR}/lib/node_modules/npm/bin/npm-cli.js
@@ -73,6 +66,7 @@ build:
 .PHONY: nodejs
 nodejs:
 
+# git checkout node source
 	@if [ ! -d /tmp/node/ ]; then \
 		cd /tmp && git clone https://github.com/nodejs/node.git; \
 	fi
@@ -83,26 +77,28 @@ nodejs:
 		mkdir /tmp/${NODE_VERSION}; \
 	fi
 
+# create dir for share object
 	@if [ ! -d ${OBJECT_DIR} ]; then \
 		mkdir -p ${OBJECT_DIR}; \
 	fi
 
-	cd /tmp/node && ./configure --shared --prefix=/tmp/${NODE_VERSION}
+# node build
+	@cd /tmp/node && ./configure --shared --prefix=/tmp/${NODE_VERSION}
+	@cd /tmp/node && make -j5  && make install
 
-	cd /tmp/node && make -j5  && make install
-
-	@rm -rf ${EXT_DIR}/${NODE_VERSION} 
-	@mkdir ${EXT_DIR}/${NODE_VERSION}
-
-	@cp -r /tmp/${NODE_VERSION}/bin ${NODE_BIN_DIR}
-	@cp -r /tmp/${NODE_VERSION}/lib ${NODE_LIB_DIR}	
-	@cp -r /tmp/${NODE_VERSION}/include ${NODE_INCLUDE_DIR}	
-
-	@if [ ${OS} = "Linux" ]; then \
-		mv /tmp/${NODE_VERSION}/lib/${LINUX_SO} ${OBJECT_DIR}; \
-  elif [ ${OS} = "Darwin" ]; then \
-		mv /tmp/${NODE_VERSION}/lib/${MAC_OSX_SO} ${OBJECT_DIR}; \
+# create dir for ext/vxxxxxxxx/
+	@if [ ! -d ${NODE_VERSION} ]; then \
+		mkdir -p ${NODE_BIN_DIR}; \
+		mkdir -p ${NODE_LIB_DIR}; \
+		mkdir -p ${NODE_INCLUDE_DIR}; \
 	fi
+
+# copy need files for libnode
+	@cp -r /tmp/${NODE_VERSION}/bin/* ${NODE_BIN_DIR}
+	@cp -r /tmp/${NODE_VERSION}/lib/* ${NODE_LIB_DIR}	
+	@cp -r /tmp/${NODE_VERSION}/include/* ${NODE_INCLUDE_DIR}
+
+	mv ${NODE_LIB_DIR}/${SHARED_OBJECT} ${OBJECT_DIR}; \
 
 clean:
 	rm -rf ${HIDDEN_DIR}/  
