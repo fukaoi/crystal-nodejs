@@ -38,7 +38,7 @@ build:
 
 	@if [ ! -d ${HIDDEN_DIR}/lib ]; then \
 	  cp -r ${NODE_LIB_DIR} ${HIDDEN_DIR}/; \
-		cp ${OBJECT_DIR}/${LINUX_SO} ${HIDDEN_DIR}/lib/; \
+		cp ${OBJECT_DIR}/${SHARED_OBJECT} ${HIDDEN_DIR}/lib/; \
   fi	
   
 # build node binary
