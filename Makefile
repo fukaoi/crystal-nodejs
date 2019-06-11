@@ -50,9 +50,10 @@ build:
 		${OBJECT_DIR}/${SHARED_OBJECT}; \
 
 # rewrite npm path 
-	@sed -i "1d" ${HIDDEN_DIR}/lib/node_modules/npm/bin/npm-cli.js
-	@sed -i -e "1i #!${HIDDEN_DIR}/bin/node" ${HIDDEN_DIR}/lib/node_modules/npm/bin/npm-cli.js
-
+# @sed -i "1d" ${HIDDEN_DIR}/lib/node_modules/npm/bin/npm-cli.js
+# @sed -i -e "1i #!${HIDDEN_DIR}/bin/node" ${HIDDEN_DIR}/lib/node_modules/npm/bin/npm-cli.js
+	@crystal run ext/node_path.cr -- ${HIDDEN_DIR}/lib/node_modules/npm/bin/npm-cli.js ${HIDDEN_DIR}/bin/node
+ 
 
 # Setting node path for npm
 	@${HIDDEN_DIR}/bin/npm config set scripts-prepend-node-path true
