@@ -62,15 +62,13 @@ build:
 
 .PHONY: install
 install:
-
 # security check
-	@cd ${HIDDEN_DIR}/js/ && ${HIDDEN_DIR}/bin/npm audit
-
 # npm install for package.json
+
 	@if [ -e ${HIDDEN_DIR}/js/package.json ]; then \
+		cd ${HIDDEN_DIR}/js/ && ${HIDDEN_DIR}/bin/npm audit; \
 		cd ${HIDDEN_DIR}/js && ${HIDDEN_DIR}/bin/npm i; \
 	fi	
-
 
 .PHONY: nodejs
 nodejs:
