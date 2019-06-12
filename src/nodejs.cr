@@ -96,7 +96,7 @@ module Nodejs
 
   private def display_output(output : String) : Void
     unless output.empty?
-      puts("#### Debug or Log(none json) ####\n#{output}")
+      puts("#### console.log ####\n#{output}")
     end
   end
 end
