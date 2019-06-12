@@ -53,7 +53,7 @@ build:
 	@ln -sf ${HIDDEN_DIR}/lib/node_modules/npm/bin/npm-cli.js ${HIDDEN_DIR}/bin/npm
 
 # rewrite npm path(Because BSD sed command be different with GNU sed)
-	crystal run ext/node_path.cr -- ${HIDDEN_DIR}/bin/npm ${HIDDEN_DIR}/bin/node
+	@crystal run ext/node_path.cr -- ${HIDDEN_DIR}/bin/npm ${HIDDEN_DIR}/bin/node
  
 
 # Setting node path for npm
