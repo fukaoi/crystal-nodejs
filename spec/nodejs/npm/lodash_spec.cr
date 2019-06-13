@@ -16,6 +16,6 @@ describe "require('lodash')" do
     )
 
     expected = {"a" => 1, "b" => 2}
-    res.should eq  expected
+    res.should eq expected
   end
 end
