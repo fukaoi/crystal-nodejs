@@ -24,7 +24,7 @@ module Nodejs
     display_debug(results[:output])
 
     unless status.success?
-      raise JSSideException.new("Eval: #{io_error.to_s}")
+			raise JSSideException.new("Nodejs.eval error: #{io_error.to_s}")
     end
 
     results[:result]
