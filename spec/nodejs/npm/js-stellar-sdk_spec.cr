@@ -1,10 +1,5 @@
 require "../../spec_helper"
 
-Nodejs::Npm.init
-unless Nodejs::Npm.is_installed?("stellar-sdk")
-  Nodejs::Npm.install("stellar-sdk")
-end
-
 describe "require('stellar-sdk')" do
   it "Get account info" do
     code = <<-SRC

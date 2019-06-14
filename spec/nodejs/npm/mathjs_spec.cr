@@ -1,10 +1,5 @@
 require "../../spec_helper"
 
-Nodejs::Npm.init
-unless Nodejs::Npm.is_installed?("mathjs")
-  Nodejs::Npm.install("mathjs")
-end
-
 describe "require('mathjs')" do
   it "Round" do
     res = Nodejs.eval(

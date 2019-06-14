@@ -1,10 +1,5 @@
 require "../../spec_helper"
 
-Nodejs::Npm.init
-unless Nodejs::Npm.is_installed?("lodash")
-  Nodejs::Npm.install("lodash")
-end
-
 describe "require('lodash')" do
   it "Defaults" do
     res = Nodejs.eval(

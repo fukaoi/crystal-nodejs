@@ -1,13 +1,5 @@
 require "../../spec_helper"
 
-Nodejs::Npm.init
-unless Nodejs::Npm.is_installed?("jquery")
-  Nodejs::Npm.install("jquery")
-end
-unless Nodejs::Npm.is_installed?("jsdom")
-  Nodejs::Npm.install("jsdom")
-end
-
 describe "require('jquery')" do
   it "Parse dom" do
     res = Nodejs.eval(
