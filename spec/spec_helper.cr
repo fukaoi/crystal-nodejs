@@ -2,8 +2,6 @@ require "spec"
 require "../src/nodejs"
 require "file_utils"
 
-
-
 src_dir = "spec/js"
 dist_dir = "#{ENV["HOME"]}/.crystal-nodejs/js"
 
