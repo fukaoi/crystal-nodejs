@@ -1,9 +1,9 @@
 name: nodejs
-version: 0.2.0
+version: 0.3.0
 
 authors:
   - fukaoi 
-crystal: 0.27.2
+crystal: 0.29.0
 license: MIT
 
 targets:
@@ -16,5 +16,5 @@ scripts:
 development_dependencies:
   ameba:
     github: veelenga/ameba
-    version: ~> 0.9.0
+    version: 0.9.2
 

@@ -21,9 +21,9 @@ describe Nodejs::Npm do
   end
 
   it "npm install module target version" do
-    res = Nodejs::Npm.install("jquery@3.3.0")
+    res = Nodejs::Npm.install("jquery@3.4.0")
     res.should be_true
-    res = Nodejs::Npm.uninstall("jquery@3.3.0")
+    res = Nodejs::Npm.uninstall("jquery@3.4.0")
     res.should be_true
   end
 
