@@ -5,7 +5,7 @@ Node.js engine for crystal-lang.  JS code and npm module executes on crystal-nod
 ## Supported OS
 
 - Linux(Ubuntu16.04, 18.04)
-- MacOSX(Processing)
+- MacOSX(MacOS High Sierra)
 
 ## Installation
 
@@ -34,6 +34,7 @@ TODO: Write development instructions here
 
 ## Benchmark
 
+This benchmark result is crystal-nodejs compare with Node.
 
 ```chart
 {
@@ -47,12 +48,12 @@ TODO: Write development instructions here
   ],
   "datasets": [
     {
-    "label": "# of execution time(sec)",
+    "label": "# of average execution time(sec)",
     "data": [
       147.2058,
       147.2322,
-      10,
-      5
+      20.1488,
+      20.0536 
     ],
     "backgroundColor": [
       "rgba(255, 99, 132, 0.2)",
