@@ -7,7 +7,6 @@ module Nodejs
   NODE_PATH = "#{home_dir}/bin/node"
 
   def eval(source_code : String, node_path : Array = [] of String) : JSON::Any
-    # todo: process.wait ? fiber nonblocking
     io = IO::Memory.new
     io_error = IO::Memory.new
     status = Process.run(
@@ -21,14 +20,14 @@ module Nodejs
     io.close
     io_error.close
 
-    tuple = extract_result(io.to_s.chomp)
-    display_output(tuple[:output])
+    results = extract_result(io.to_s.chomp)
+    display_debug(results[:output])
 
     unless status.success?
-      raise JSSideException.new("Eval: #{io_error.to_s}")
+      raise JSSideException.new("Nodejs.eval error: #{io_error.to_s}")
     end
 
-    tuple[:result]
+    results[:result]
   end
 
   def file_run(file_path : String) : JSON::Any
@@ -94,7 +93,7 @@ module Nodejs
     node_path
   end
 
-  private def display_output(output : String) : Void
+  private def display_debug(output : String) : Void
     unless output.empty?
       puts("#### console.log ####\n#{output}")
     end

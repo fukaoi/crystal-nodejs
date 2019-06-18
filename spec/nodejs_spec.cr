@@ -215,19 +215,24 @@ end
 
 describe "Read js code file and Eval js code" do
   it "read example js file" do
-    res = Nodejs.file_run("spec/file_run.js")
+    res = Nodejs.file_run("spec/js/file_run.js")
     res["text"].to_s.empty?.should be_false
   end
 
   it "Not found js file" do
     expect_raises(Nodejs::CrystalSideException) do
-      Nodejs.file_run("spec/hoge_fuga.js")
+      Nodejs.file_run("spec/js/hoge_fuga.js")
     end
   end
 
   it "Not found js file" do
     expect_raises(Nodejs::CrystalSideException) do
-      Nodejs.load_jsfile("spec/hoge_fuga.js")
+      Nodejs.load_jsfile("spec/js/hoge_fuga.js")
     end
+  end
+
+  it "Call math module from js file" do
+    res = Nodejs.file_run("spec/js/file_run_npm.js")
+    res["result"].to_s.to_i.should eq 14
   end
 end
