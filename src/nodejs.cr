@@ -7,11 +7,15 @@ module Nodejs
   NODE_PATH = "#{home_dir}/bin/node"
 
   def eval(source_code : String, node_path : Array = [] of String) : JSON::Any
-    channel = Channel({status: Process::Status, ok: IO::Memory, ng: IO::Memory}).new
-		io = IO::Memory.new
-		io_error = IO::Memory.new
+    channel = Channel({
+			status: Process::Status, 
+			success: JSON::Any, 
+			error: String
+		}).new
 
     spawn do
+			io = IO::Memory.new
+			io_error = IO::Memory.new
       status = Process.run(
         NODE_PATH,
         args: {"-e", "#{Values.set_return_js} #{source_code}"},
@@ -19,22 +23,25 @@ module Nodejs
         output: io,
         error: io_error
       )
-      channel.send({status: status, ok: io, ng: io_error})
+		  results = extract_result(io.to_s.chomp)
+
+		  # execute console.log in JS code
+    	display_debug(results[:output])
+
+			channel.send({
+				status: status,
+				success: results[:result],
+				error: io_error.to_s
+			})
       io.close
       io_error.close
     end
 
     receives = channel.receive
-		results = extract_result(receives[:ok].to_s.chomp)
-
-		# execute console.log in JS code
-    display_debug(results[:output])
-
 		unless receives[:status].success?
-			raise JSSideException.new("Nodejs.eval error: #{receives[:ng].to_s}")
-    end
-
-    results[:result]
+			raise JSSideException.new("Nodejs.eval error: #{receives[:error]}")
+		end
+    receives[:success]
   end
 
   def file_run(file_path : String) : JSON::Any
