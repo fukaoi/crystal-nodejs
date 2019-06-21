@@ -7,24 +7,31 @@ module Nodejs
   NODE_PATH = "#{home_dir}/bin/node"
 
   def eval(source_code : String, node_path : Array = [] of String) : JSON::Any
-    io = IO::Memory.new
-    io_error = IO::Memory.new
-    status = Process.run(
-      NODE_PATH,
-      args: {"-e", "#{Values.set_return_js} #{source_code}"},
-      env: setup_env(node_path),
-      output: io,
-      error: io_error
-    )
+    channel = Channel({status: Process::Status, ok: IO::Memory, ng: IO::Memory}).new
+		io = IO::Memory.new
+		io_error = IO::Memory.new
 
-    io.close
-    io_error.close
+    spawn do
+      status = Process.run(
+        NODE_PATH,
+        args: {"-e", "#{Values.set_return_js} #{source_code}"},
+        env: setup_env(node_path),
+        output: io,
+        error: io_error
+      )
+      channel.send({status: status, ok: io, ng: io_error})
+      io.close
+      io_error.close
+    end
 
-    results = extract_result(io.to_s.chomp)
+    receives = channel.receive
+		results = extract_result(receives[:ok].to_s.chomp)
+
+		# execute console.log in JS code
     display_debug(results[:output])
 
-    unless status.success?
-      raise JSSideException.new("Nodejs.eval error: #{io_error.to_s}")
+		unless receives[:status].success?
+			raise JSSideException.new("Nodejs.eval error: #{receives[:ng].to_s}")
     end
 
     results[:result]
