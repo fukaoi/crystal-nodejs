@@ -1,6 +1,6 @@
 # crystal-nodejs
 
-Node.js engine for crystal-lang.  JS code and npm module executes on crystal-nodejs, AND don't need to install node.js binary. 
+Node.js engine for crystal-lang.  JS code and npm module executes on crystal-nodejs, and don't need to install node.js binary.
 
 ## Supported OS
 
