@@ -1,12 +1,10 @@
 # crystal-nodejs
 
-Node.js engine for crystal-lang. JS code and npm module executes on crystal-nodejs, And don't need to install node.js binary.Explain about architecture, Compiled as a shared object node.js(i.e: libnodejs) and execute as one process on crystal-lang. So call C execvp() system call through Process.run() method, execute in this c function.
+Node.js engine for crystal-lang. JS code and npm module executes on crystal-nodejs, And don't need to install Node.js binary.Explain about architecture, Compiled as a shared object Node.js(i.e: libnodejs) and execute as one process on crystal-lang. So call C execvp() system call through Process.run() method, execute in this c function.
 
-Process.run method is low overhead, Compare pure node.js js code and crystal-nodejs js code, There was no difference in performance(see Benchmark heading  about performance detail).
+Process.run method is low overhead, Compare pure Node.js js code and crystal-nodejs js code, There was no difference in performance(see Benchmark heading  about performance detail).
 
-Using crystal-nodejs can pass through  node.js result of crystal-lang.
-
-Happy Crystaling!! :tada:
+Using crystal-nodejs can pass through  Node.js result of crystal-lang. Happy Crystaling!! :tada:
 
 ## Supported OS
 
@@ -57,7 +55,7 @@ CODE
 Nodejs.eval(code)
 ```
 
-##### How to send node.js result to crystal-lang
+##### How to send Node.js result to crystal-lang
 
 * Use special `toCrystal()` method. 
 
@@ -81,24 +79,39 @@ Nodejs.eval(code)
 
 ## Benchmark
 
+This benchmark is fibonacci and binary-search results, As can see from the result, crystal-nodejs is high performance. 
+
+* Machine spec: 
+  * cpu: Intel(R) Core(TM) i7-7820HK CPU @ 2.90GHz  4core
+  * memory: 16Gbyte 
+
+* Benchmark code:  
+  * fibonacci:  
+  * binary-search: 
+
+
+<font color="GoldenRod">Yellow color: Node.js</font>
+
+<font color="CadetBlue">Blue color: cristal-nodejs</font>
+
 ```chart
 {
   "type": "bar",
   "data": {
   "labels": [
-    "node.js(fibonati)",
-    "crystal-nodejs(fibonati)",
-    "node.js(binary tree)",
-    "crystal-nodejs(binary tree)"
+    "fibonacci.js",
+    "fibonacci.cr",
+    "binarysearch.js",
+    "binarysearch.cr"
   ],
   "datasets": [
     {
-    "label": "Benchmark result",
+    "label": "Benchmark result(average time)",
     "data": [
       147.2058,
       147.2322,
-      20.1488,
-      20.0536 
+      94.1126,
+      94.1428 
     ],
     "backgroundColor": [
       "rgba(255, 206, 86, 0.2)",
@@ -119,6 +132,30 @@ Nodejs.eval(code)
   "options": {}
 }
 ```
+
+##### Raw data(Benchmark result)
+
+* fibonacci
+
+|  -  | Node.js | crystal-nodejs |
+| ---- | ---- | ---- |
+|  1  | real 2m26.968s | real 2m27.337s |
+|  2  | real 2m27.230s | real 2m27.263s |
+|  3  | real 2m26.987s | real 2m28.058s |
+|  4  | real 2m27.582s | real 2m26.672s |
+|  5  | real 2m27.262s | real 2m26.831s |
+
+
+* binary-search
+
+|  -  | Node.js | crystal-nodejs |
+| ---- | ---- | ---- |
+|  1  | real 1m35.699s | real 1m35.962s |
+|  2  | real 1m35.082s | real 1m32.018s |
+|  3  | real 1m33.309s | real 1m35.212s |
+|  4  | real 1m34.423s | real 1m33.830s |
+|  5  | real 1m32.050s | real 1m33.530s |
+
 
 ## Development
 
