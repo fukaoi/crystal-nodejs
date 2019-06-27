@@ -81,6 +81,45 @@ Nodejs.eval(code)
 
 ## Benchmark
 
+```chart
+{
+  "type": "bar",
+  "data": {
+  "labels": [
+    "node.js(fibonati)",
+    "crystal-nodejs(fibonati)",
+    "node.js(binary tree)",
+    "crystal-nodejs(binary tree)"
+  ],
+  "datasets": [
+    {
+    "label": "Benchmark result",
+    "data": [
+      147.2058,
+      147.2322,
+      20.1488,
+      20.0536 
+    ],
+    "backgroundColor": [
+      "rgba(255, 206, 86, 0.2)",
+      "rgba(75, 192, 192, 0.2)",
+      "rgba(255, 206, 86, 0.2)",
+      "rgba(75, 192, 192, 0.2)"
+    ],
+    "borderColor": [
+      "rgba(255, 206, 86, 1)",
+      "rgba(75, 192, 192, 1)",
+      "rgba(255, 206, 86, 1)",
+      "rgba(75, 192, 192, 1)"
+    ],
+    "borderWidth": 1
+    }
+  ]
+  },
+  "options": {}
+}
+```
+
 ## Development
 
 ## Tips
