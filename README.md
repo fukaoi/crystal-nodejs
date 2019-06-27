@@ -1,6 +1,12 @@
 # crystal-nodejs
 
-Node.js engine for crystal-lang.  JS code and npm module executes on crystal-nodejs, AND don't need to install node.js binary. 
+Node.js engine for crystal-lang. JS code and npm module executes on crystal-nodejs, And don't need to install node.js binary.Explain about architecture, Compiled as a shared object node.js(i.e: libnodejs) and execute as one process on crystal-lang. So call C execvp() system call through Process.run() method, execute in this c function.
+
+Process.run method is low overhead, Compare pure node.js js code and crystal-nodejs js code, There was no difference in performance(see Benchmark heading  about performance detail).
+
+Using crystal-nodejs can pass through  node.js result of crystal-lang.
+
+Happy Crystaling!! :tada:
 
 ## Supported OS
 
@@ -19,7 +25,9 @@ Node.js engine for crystal-lang.  JS code and npm module executes on crystal-nod
 
 2. Run `shards install`
 
-## Instructures
+
+3. libnodejs install, init js directory `make or make all`
+
 
 ## Usage
 
@@ -70,6 +78,8 @@ Nodejs.eval(code)
 
 
 ##### More usages look at [spec/nodejs/npm/](https://github.com/fukaoi/crystal-nodejs/tree/master/spec/nodejs/npm)
+
+## Benchmark
 
 ## Development
 
