@@ -167,6 +167,12 @@ This benchmark is fibonacci and binary-search results, As can see from the resul
 
 ## Development
 
+#### Exception
+
+* CrystalSideException・・・ Be thrown error in crystal-lang code
+
+* JSSideException... Be thrown error in JS code
+
 ## Safety
 
 ## Contributing
