@@ -33,6 +33,20 @@ In the above architecture image, crystal-nodejs provides Node.js, LibC, lib that
 
 3. libnodejs install, init js directory `make or make all`
 
+execute make task, So created $HOME/.crystal-nodejs/
+
+```sh
+$HOME/.crystal-nodejs/
+├── bin        // Use binary in crystal-nodejs
+│   ├── node  
+│   ├── npm 
+│   └── npx
+├── js         // Origina JS code, package.json
+└── lib        // shared object for Node.js
+    └── libnode.so.64(libnode.64.dylib)
+
+```
+
 
 ## Usage
 
