@@ -6,10 +6,18 @@ Process.run method is low overhead, Compare pure Node.js js code and crystal-nod
 
 Using crystal-nodejs can pass through  Node.js result of crystal-lang. Happy Crystaling!! :tada:
 
+<center>
+  <h4>Architecture image</h4>
+  <img src="docs/architecture_image.png" width="50%">
+</center>
+In the above architecture image, crystal-nodejs provides Node.js, LibC, lib that was created crystal-lang
+
+
 ## Supported OS
 
 - Linux(Ubuntu16.04, 18.04)
-- MacOSX(Processing)
+- MacOSX(High Sierra)
+- Windows(Unfortunately yet not supported on crystal-lang...)
 
 ## Installation
 
@@ -29,17 +37,23 @@ Using crystal-nodejs can pass through  Node.js result of crystal-lang. Happy Cry
 
 ## Usage
 
-##### Display `Hello world` on terminal
+### Bacis usage
 
-* aaaa
+#### Output Hello crystal-nodejs !! on terminal
+
+* Simple JS code, output 'Hello crystal-nodejs'
 
 ```js
 require "nodejs"
 
 Nodejs.eval("console.log('Hello crystal-nodejs !!')")
 ```
+<br />
 
-##### setTimeout
+#### Use setTimeout execute lazy code
+
+* below code is output 'Hello crystal' after 2sec
+
 ```js
 require "nodejs"
 
@@ -54,28 +68,43 @@ CODE
 
 Nodejs.eval(code)
 ```
+<br />
 
-##### How to send Node.js result to crystal-lang
+#### How to send Node.js result to crystal-lang
 
-* Use special `toCrystal()` method. 
+* Use special `toCrystal()` method.toCrystal() is only function in crystal-nodejs.Can response various type in JS,  and all JS type is converted `JSON::Any` in crystal
 
 ```js
 require "nodejs"
 
 code = <<-CODE
-  let user = {
-    sayHi(firstName) {
-      toCrystal(`Hello, ${firstName}!`);
-    }
-  };
-  setTimeout(() => {user.sayHi('crystal')}, 2000);
+  toCrystal({data:"spec"})
 CODE
 
-Nodejs.eval(code)
+res = Nodejs.eval(code)
+
+puts res           # {"data" => "spec"}
+puts typeof(res)   # JSON::Any
+```
+<br />
+
+* The below example, all JS type(Number, Boolean, String) is converted `JSON::Any`.
+```js
+require "nodejs"
+
+code = <<-CODE
+  toCrystal({123456})
+CODE
+
+res = Nodejs.eval(code)
+
+puts res           # 123456
+puts typeof(res)   # JSON::Any
 ```
 
+<br />
 
-##### More usages look at [spec/nodejs/npm/](https://github.com/fukaoi/crystal-nodejs/tree/master/spec/nodejs/npm)
+#### More usages look at [spec/nodejs/npm/](https://github.com/fukaoi/crystal-nodejs/tree/master/spec/nodejs/npm)
 
 ## Benchmark
 
@@ -135,7 +164,8 @@ This benchmark is fibonacci and binary-search results, As can see from the resul
 }
 ```
 
-##### Raw data(Benchmark result)
+
+#### Raw data(Benchmark result)
 
 * fibonacci
 
@@ -161,8 +191,7 @@ This benchmark is fibonacci and binary-search results, As can see from the resul
 
 ## Development
 
-## Tips
-
+## Safety
 
 ## Contributing
 
