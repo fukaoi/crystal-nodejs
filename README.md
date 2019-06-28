@@ -117,6 +117,13 @@ puts typeof(res)   # JSON::Any
 
 <br />
 
+###  use NPM usage
+
+#### use npm install method
+
+
+
+
 #### More usages look at [spec/nodejs/npm/](https://github.com/fukaoi/crystal-nodejs/tree/master/spec/nodejs/npm)
 
 ## Benchmark
