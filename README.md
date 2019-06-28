@@ -119,49 +119,7 @@ This benchmark is fibonacci and binary-search results, As can see from the resul
   * fibonacci source: [Node.js](https://github.com/fukaoi/crystal-nodejs/blob/benchmark/bench/fibonacci.js) [crystal-lang](https://github.com/fukaoi/crystal-nodejs/blob/benchmark/bench/binarysearch.cr)
   * binary-search source: [Node.js](https://github.com/fukaoi/crystal-nodejs/blob/benchmark/bench/binarysearch.js) [crystal-lang](https://github.com/fukaoi/crystal-nodejs/blob/benchmark/bench/binarysearch.cr)   
 
-
-<font color="GoldenRod">Yellow color: Node.js</font>
-
-<font color="CadetBlue">Blue color: cristal-nodejs</font>
-
-```chart
-{
-  "type": "bar",
-  "data": {
-  "labels": [
-    "fibonacci.js",
-    "fibonacci.cr",
-    "binarysearch.js",
-    "binarysearch.cr"
-  ],
-  "datasets": [
-    {
-    "label": "Benchmark result(average time)",
-    "data": [
-      147.2058,
-      147.2322,
-      94.1126,
-      94.1428 
-    ],
-    "backgroundColor": [
-      "rgba(255, 206, 86, 0.2)",
-      "rgba(75, 192, 192, 0.2)",
-      "rgba(255, 206, 86, 0.2)",
-      "rgba(75, 192, 192, 0.2)"
-    ],
-    "borderColor": [
-      "rgba(255, 206, 86, 1)",
-      "rgba(75, 192, 192, 1)",
-      "rgba(255, 206, 86, 1)",
-      "rgba(75, 192, 192, 1)"
-    ],
-    "borderWidth": 1
-    }
-  ]
-  },
-  "options": {}
-}
-```
+<img src="docs/barchart.png">
 
 
 #### Raw data(Benchmark result)
