@@ -7,7 +7,7 @@ Process.run method is low overhead, Compare pure Node.js js code and crystal-nod
 Using crystal-nodejs can pass through  Node.js result of crystal-lang. Happy Crystaling!! :tada:
 
 <h4>Architecture image</h4>
-<img src="docs/architecture_image.png" width="50%">
+<img src="docs/architecture_image.png" width="70%">
 
 In the above architecture image, crystal-nodejs provides Node.js, LibC, lib that was created crystal-lang
 
