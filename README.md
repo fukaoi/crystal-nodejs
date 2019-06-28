@@ -79,15 +79,17 @@ Nodejs.eval(code)
 
 ## Benchmark
 
-This benchmark is fibonacci and binary-search results, As can see from the result, crystal-nodejs is high performance. 
+This benchmark is fibonacci and binary-search results, As can see from the result, crystal-nodejs is high performance.below at bar chart is response average time that executes 5 times fibonacci and binary-search. benchmark source code detail  is can see from URL link
 
 * Machine spec: 
   * cpu: Intel(R) Core(TM) i7-7820HK CPU @ 2.90GHz  4core
   * memory: 16Gbyte 
 
+<br />
+
 * Benchmark code:  
-  * fibonacci:  
-  * binary-search: 
+  * fibonacci source: [Node.js](https://github.com/fukaoi/crystal-nodejs/blob/benchmark/bench/fibonacci.js) [crystal-lang](https://github.com/fukaoi/crystal-nodejs/blob/benchmark/bench/binarysearch.cr)
+  * binary-search source: [Node.js](https://github.com/fukaoi/crystal-nodejs/blob/benchmark/bench/binarysearch.js) [crystal-lang](https://github.com/fukaoi/crystal-nodejs/blob/benchmark/bench/binarysearch.cr)   
 
 
 <font color="GoldenRod">Yellow color: Node.js</font>
