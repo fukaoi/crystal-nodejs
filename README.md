@@ -31,9 +31,7 @@ In the above architecture image, crystal-nodejs provides Node.js, LibC, lib that
 2. Run `shards install`
 
 
-3. libnodejs install, init js directory `make or make all`
-
-execute make task, So created $HOME/.crystal-nodejs/
+3. libnodejs install, init js directory `make or make all`. execute make task, So created $HOME/.crystal-nodejs/
 
 ```sh
 $HOME/.crystal-nodejs/
