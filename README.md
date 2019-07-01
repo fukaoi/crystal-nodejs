@@ -1,5 +1,7 @@
 # crystal-nodejs
 
+[![Build Status](https://travis-ci.org/fukaoi/crystal-nodejs.svg?branch=master)](https://travis-ci.org/fukaoi/crystal-nodejs)
+
 Node.js engine for crystal-lang.  JS code and npm module executes on crystal-nodejs, AND don't need to install node.js binary. 
 
 ## Supported OS
