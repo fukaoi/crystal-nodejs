@@ -290,7 +290,7 @@ ext/
 
 ## Safety
 
-* check npm module
+* Scan for vulnerabilities when build project. If be found vulnerabilities, build is supposed to fail.this logic execute `npm audit` command in Makefile.execute `npm audit --fix` command and build continue 
 
 ## Contributing
 
