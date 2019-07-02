@@ -24,18 +24,18 @@ In the above architecture image, crystal-nodejs provides Node.js, LibC, lib that
 
 1. Add the dependency to your `shard.yml`:
 
-   ```yaml
-   dependencies:
+```yaml
+  dependencies:
      nodejs:
        github: fukaoi/crystal-nodejs
-   ```
+```
 
 2. Run `shards install`
 
 
 3. libnodejs install, init js directory `make or make all`.So created $HOME/.crystal-nodejs/
 
-```sh
+```
 $HOME/.crystal-nodejs/
 ├── bin        // Use binary in crystal-nodejs
 │   ├── node  
@@ -263,13 +263,34 @@ This benchmark is fibonacci and binary-search results, As can see from the resul
 
 ## Development
 
+#### Extension directory tree
+
+```
+crystal-nodejs/
+ext/
+├── libnode.cc     // main function for libnode.so
+├── node_path.cr   // script for rewrite node path of npm
+├── obj            // shared object of Linux, Mac OSX
+│   └── v10.16.0
+└── v10.16.0       // shared object dependency file and directory
+    ├── bin
+    ├── include
+    └── lib
+```
+
+#### Create json class
+
+* May want to convert crystal-lang json mapper type because response parameter from Nodejs.eval() method is all JSON::Any type. So the recommended tool is [jsontocr](https://github.com/molnarmark/jsontocr), very simple and easy.
+
+
 #### Exception
 
-* CrystalSideException・・・ Be thrown error in crystal-lang code
-
-* JSSideException... Be thrown error in JS code
+* CrystalSideException ... Be thrown error in crystal-lang code
+* JSSideException ... Be thrown error in JS code
 
 ## Safety
+
+* check npm module
 
 ## Contributing
 
