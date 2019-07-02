@@ -67,7 +67,7 @@ Nodejs.eval("console.log('Hello crystal-nodejs !!')")
 
 * below code is output 'Hello crystal' after 2sec
 
-```js
+```crystal
 require "nodejs"
 
 code = <<-CODE
@@ -87,7 +87,7 @@ Nodejs.eval(code)
 
 * Use special `toCrystal()` method.toCrystal() is only function in crystal-nodejs.Can response various type in JS,  and all JS type is converted `JSON::Any` in crystal
 
-```js
+```crystal
 require "nodejs"
 
 code = <<-CODE
@@ -102,7 +102,7 @@ puts typeof(res)   # JSON::Any
 <br />
 
 * The below example, all JS type(Number, Boolean, String) is converted `JSON::Any`.
-```js
+```crystal
 require "nodejs"
 
 code = <<-CODE
@@ -117,12 +117,74 @@ puts typeof(res)   # JSON::Any
 
 <br />
 
-###  use NPM usage
+###  Use NPM(node modules) 
 
-#### use npm install method
+Node modules is installed in $HOME/.crystal-nodejs/js/
+
+#### npm install method
+
+* Use Nodejs::Npm.install('package name') method, can install need package.this below example is for use [mathjs](https://www.npmjs.com/package/mathjs) module.
+
+```crystal
+require "nodejs"
+Nodejs::Npm.install("mathjs")
+
+code = <<-CODE
+  const math = require("mathjs"); // Note: JS side require
+  toCrystal(math.log(10000, 10));
+CODE
+
+puts Nodejs.eval(code) # 4
+```
+<br />
+
+#### package.json
+
+* a package.json copy to $HOME/.crystal-nodejs/js/ direcotry, and call NodeJs::Npm.install method
+
+[package.json]
+```js
+"dependencies": {
+  "mathjs": "^6.0.2"
+}
+```
+
+```crystal
+require "nodejs"
+Nodejs::Npm.install
+
+code = <<-CODE
+  const math = require("mathjs"); // Note: JS side require
+  toCrystal(math.log(10000, 10));
+CODE
+
+puts Nodejs.eval(code) # 4
+```
+<br />
 
 
+### Use existing the JS file
 
+#### loading JS file and execute
+
+* existing js file to, use Node Js.file run method, can run on crystal-lang  
+
+[file_run.js]
+```js
+const fs = require('fs');
+fs.readFile('spec/nodejs_spec.cr', 'utf8', (err, text) => {
+  console.log('text file!');
+  toCrystal({text: text});
+});
+```
+
+```crystal
+require "nodejs"
+puts Nodejs.file_run("./file_run.js")
+```
+
+
+<br />
 
 #### More usages look at [spec/nodejs/npm/](https://github.com/fukaoi/crystal-nodejs/tree/master/spec/nodejs/npm)
 
