@@ -183,7 +183,39 @@ require "nodejs"
 puts Nodejs.file_run("./file_run.js")
 ```
 
+<br />
 
+#### Replace parameters in existing JS file
+
+* Use Nodejs.replace_params() method, can set the customization value to the parameter of the existing js file from crystal-lang. this method merit don't have to modify existing js files and can use on crystal-lang
+
+* replace parameter type can be only `const xxxxx`. 
+
+[calc.js]
+```js
+const a = 10;
+const b = 20;
+
+const calc = (left_side, right_side) => {
+  return left_side + right_side;
+}
+
+const res = calc(a, b);
+console.log(res);
+```
+
+```crystal
+require "nodejs"
+
+code = File.read("./calc.js")
+hash = {
+  "a" => 100,  # const a = 100
+  "b" => 200   # const b = 200
+}
+
+replaced_code = Nodejs.replace_params(code, hash)
+Nodejs.eval(replaced_code)  # 300
+```
 <br />
 
 #### More usages look at [spec/nodejs/npm/](https://github.com/fukaoi/crystal-nodejs/tree/master/spec/nodejs/npm)
