@@ -251,7 +251,7 @@ Error: Error raise!
 
 #### Error object throw after catch the JS Error with `try catch`  
 
-* 
+* can pass an error object to crystal-lang by using a specific `toCrystalErr` method. 
 
 ```crystal
 require "nodejs"
@@ -260,7 +260,7 @@ code = <<-CODE
   try {
     throw new Error('Error raise!');
   } catch(e) {
-    toCrystalError(e);
+    toCrystalErr(e);
   }
 CODE
 
