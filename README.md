@@ -271,8 +271,8 @@ ext/
 ├── libnode.cc     // main function for libnode.so
 ├── node_path.cr   // script for rewrite node path of npm
 ├── obj            // shared object of Linux, Mac OSX
-│   └── v10.16.0
-└── v10.16.0       // shared object dependency file and directory
+│   └── 10.16.0
+└── 10.16.0        // shared object dependency file and directory
     ├── bin
     ├── include
     └── lib
@@ -288,7 +288,15 @@ ext/
 * CrystalSideException ... Be thrown error in crystal-lang code
 * JSSideException ... Be thrown error in JS code
 
-## Safety
+#### Make tasks
+
+* make build ... build libnode and deploy $HOME/.crystal-nodejs/ 
+* make install ... using package.json, npm install of dependency modules
+* make nodejs ... git clone Node.js and build
+* make (all) ... Same task make build && make install
+* make clean ... delete $HOME/.crystal-nodejs/ and temporaty directory
+
+#### Safety
 
 * Scan for vulnerabilities when build project. If be found vulnerabilities, build is supposed to fail.this logic execute `npm audit` command in Makefile.execute `npm audit --fix` command and build continue 
 
