@@ -218,6 +218,69 @@ Nodejs.eval(replaced_code)  # 300
 ```
 <br />
 
+### Catch JS Exception
+
+#### throw errors directly
+
+* throw Error in JS, it is converted as `JSSideExceptin` in crystal-lang. So can catch JSSIDEExcetpion in crystal-lang.  
+
+```crystal
+require "nodejs"
+
+code = <<-CODE
+  throw new Error('Error raise!');
+CODE
+
+Nodejs.eval(code)  
+```
+
+```crystal
+Error: Error raise!
+    at [eval]:10:9
+    at Script.runInThisContext (vm.js:122:20)
+    at Object.runInThisContext (vm.js:329:38)
+    at Object.<anonymous> ([eval]-wrapper:6:22)
+    at Module._compile (internal/modules/cjs/loader.js:776:30)
+    at evalScript (internal/bootstrap/node.js:589:27)
+    at startup (internal/bootstrap/node.js:265:9)
+    at bootstrapNodeJSCore (internal/bootstrap/node.js:622:3)
+ (Nodejs::JSSideException)
+```
+
+<br />
+
+#### Error object throw after catch the JS Error with `try catch`  
+
+* 
+
+```crystal
+require "nodejs"
+
+code = <<-CODE
+  try {
+    throw new Error('Error raise!');
+  } catch(e) {
+    toCrystalError(e);
+  }
+CODE
+
+Nodejs.eval(code)  
+```
+
+```crystal
+Error: Error raise!
+    at [eval]:10:8
+    at Script.runInThisContext (vm.js:122:20)
+    at Object.runInThisContext (vm.js:329:38)
+    at Object.<anonymous> ([eval]-wrapper:6:22)
+    at Module._compile (internal/modules/cjs/loader.js:776:30)
+    at evalScript (internal/bootstrap/node.js:589:27)
+    at startup (internal/bootstrap/node.js:265:9)
+    at bootstrapNodeJSCore (internal/bootstrap/node.js:622:3)
+ (Nodejs::JSSideException)
+```
+
+ 
 #### More usages look at [spec/nodejs/npm/](https://github.com/fukaoi/crystal-nodejs/tree/master/spec/nodejs/npm)
 
 ## Benchmark
