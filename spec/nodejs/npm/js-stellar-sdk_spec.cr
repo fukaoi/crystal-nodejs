@@ -12,8 +12,7 @@ describe "require('stellar-sdk')" do
         toCrystal({hash: page.records[0].hash})
       })
       .catch(function (err) {
-        console.error(err);
-        process.exit(1);
+        toCrystalErr(err);
       });
     SRC
     res = Nodejs.eval(code)

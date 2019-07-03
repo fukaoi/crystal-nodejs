@@ -57,8 +57,7 @@ describe Nodejs do
     try {
       throw new Error('#{mess}');
     } catch(e) {
-      console.error(e);
-      process.exit(1);
+      toCrystalErr(e);
     }
     SRC
     expect_raises(Nodejs::JSSideException, mess) do
@@ -88,7 +87,7 @@ describe Nodejs do
     promise.then((value) => {
       toCrystal({promise: value});
     }).catch((error) => {
-      console.error(error);
+      toCrystalErr(error);
     });
     SRC
     res = Nodejs.eval(code)
@@ -104,7 +103,7 @@ describe Nodejs do
     promise.then((value) => {
       console.log(value);
     }).catch((error) => {
-      console.error(error);
+      toCrystalErr(error);
     });
     SRC
     expect_raises(Nodejs::JSSideException, mess) do
