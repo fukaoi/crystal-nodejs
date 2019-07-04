@@ -359,9 +359,15 @@ ext/
 * make (all) ... Same task make build && make install
 * make clean ... delete $HOME/.crystal-nodejs/ and temporaty directory
 
+#### Raw JS
+
+
 #### Safety
 
 * Scan for vulnerabilities when build project. If be found vulnerabilities, build is supposed to fail.this logic execute `npm audit` command in Makefile.execute `npm audit --fix` command and build continue 
+
+* use `make audit`, export raw JS to /tmp/raw_js/ and do static analysis with eslint-plugin-security 
+
 
 ## Contributing
 
