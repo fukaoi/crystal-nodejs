@@ -8,7 +8,6 @@ module Nodejs
   NODE_PATH = "#{home_dir}/bin/node"
 
   def eval(source_code : String, node_path : Array = [] of String) : JSON::Any
-
     # use make audit
     create_raw_js(source_code) unless ENV["RAW_JS"]? == nil
 
@@ -102,7 +101,7 @@ module Nodejs
     hash = Digest::MD5.hexdigest(raw)
     dir = "/tmp/raw_js"
     unless Dir.exists?(dir)
-    	FileUtils.mkdir(dir)
+      FileUtils.mkdir(dir)
     end
     File.write("#{dir}/#{hash}.js", raw)
   end
