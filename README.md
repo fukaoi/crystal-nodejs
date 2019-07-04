@@ -353,11 +353,12 @@ ext/
 
 #### Make tasks
 
-* make build ... build libnode and deploy $HOME/.crystal-nodejs/ 
+* make build   ... build libnode and deploy $HOME/.crystal-nodejs/ 
 * make install ... using package.json, npm install of dependency modules
-* make nodejs ... git clone Node.js and build
-* make (all) ... Same task make build && make install
-* make clean ... delete $HOME/.crystal-nodejs/ and temporaty directory
+* make nodejs  ... git clone Node.js and build
+* make (all)   ... Same task make build && make install
+* make clean   ... delete $HOME/.crystal-nodejs/ and temporaty directory
+* make audit   ... do static analysis for JS
 
 #### Raw JS
 
