@@ -1,4 +1,5 @@
 require "./spec_helper"
+require "file_utils"
 
 describe Nodejs do
   it "Exec eval with plain text" do
@@ -184,6 +185,13 @@ describe "Replace from JS raw code to param" do
 
   it "libnode version" do
     Nodejs.version
+  end
+
+  it "Create written raw js" do
+    code = "spec"
+    hash = Digest::MD5.hexdigest(code)
+    Nodejs.create_raw_js(code)
+    File.exists?("/tmp/raw_js/#{hash}")
   end
 end
 

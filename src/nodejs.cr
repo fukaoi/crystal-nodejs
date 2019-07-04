@@ -1,4 +1,5 @@
 require "io"
+require "digest/md5"
 require "./nodejs/*"
 
 module Nodejs
@@ -7,6 +8,10 @@ module Nodejs
   NODE_PATH = "#{home_dir}/bin/node"
 
   def eval(source_code : String, node_path : Array = [] of String) : JSON::Any
+
+    # use make audit
+    create_raw_js(source_code) unless ENV["RAW_JS"]? == nil
+
     io = IO::Memory.new
     io_error = IO::Memory.new
     status = Process.run(
@@ -91,6 +96,15 @@ module Nodejs
       node_path["NODE_PATH"] = "#{node_path["NODE_PATH"]}:#{path.join(":")}"
     end
     node_path
+  end
+
+  def create_raw_js(raw : String) : Void
+    hash = Digest::MD5.hexdigest(raw)
+    dir = "/tmp/raw_js"
+    unless Dir.exists?(dir)
+    	FileUtils.mkdir(dir)
+    end
+    File.write("#{dir}/#{hash}.js", raw)
   end
 
   private def display_debug(output : String) : Void

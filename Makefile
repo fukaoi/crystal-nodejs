@@ -5,6 +5,7 @@ NODE_LIB_DIR       = ${EXT_DIR}/${NODE_VERSION}/lib
 NODE_INCLUDE_DIR   = ${EXT_DIR}/${NODE_VERSION}/include
 OBJECT_DIR         = ${EXT_DIR}/obj/${NODE_VERSION}
 HIDDEN_DIR         = $(HOME)/.crystal-nodejs
+RAW_JS_DIR         = /tmp/raw_js
 NODE_VERSION       = 10.16.0
 OS                 := $(shell uname)
 SHARED_OBJECT      := $(shell if [ ${OS} = "Linux" ]; then echo libnode.so.64; elif [ ${OS} = "Darwin" ]; then echo libnode.64.dylib; fi)
@@ -107,7 +108,21 @@ nodejs:
 
 	mv ${NODE_LIB_DIR}/${SHARED_OBJECT} ${OBJECT_DIR}; \
 
+.PHONY: clean
 clean:
 	rm -rf ${HIDDEN_DIR}/  
 	rm -rf /tmp/node/  
 	rm -rf /tmp/${NODE_VERSION}/  
+	rm -rf ${RAW_JS_DIR}/  
+
+.PHONY: audit
+audit:
+	@if [ ! -d ${RAW_JS_DIR} ]; then \
+		mkdir -p ${RAW_JS_DIR}; \
+	fi
+
+	@cp ./ext/audit/package*      ${HIDDEN_DIR}/js/
+	@cp ./ext/audit/.eslintrc     ${RAW_JS_DIR}/
+	@make install
+
+	${HIDDEN_DIR}/js/node_modules/.bin/eslint ${RAW_JS_DIR};

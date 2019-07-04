@@ -1,0 +1,13 @@
+{
+  "name": "crystal-nodejs",
+  "version": "0.1.0",
+  "description": "for audit",
+  "repository": "crystal-nodejs",
+  "main": "",
+  "author": "fukaoi",
+  "license": "MIT",
+  "devDependencies": {
+    "eslint": "^5.16.0",
+    "eslint-plugin-security": "^1.4.0"
+  }
+}
