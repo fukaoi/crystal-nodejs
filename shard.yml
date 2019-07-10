@@ -3,7 +3,9 @@ version: 0.1.0
 
 authors:
   - fukaoi 
+
 crystal: 0.29.0
+
 license: MIT
 
 targets:
@@ -17,4 +19,3 @@ development_dependencies:
   ameba:
     github: veelenga/ameba
     version: 0.10.0
-
