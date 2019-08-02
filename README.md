@@ -20,6 +20,11 @@ In the above architecture image, crystal-nodejs provides Node.js, LibC, lib that
 - MacOSX(High Sierra)
 - Windows(Unfortunately yet not supported on crystal-lang...)
 
+## Supported Node.js
+
+* Look at [this](https://github.com/fukaoi/crystal-nodejs/tree/master/ext) directory(e.g v10.xxx.xxxx) for supported versions.crystal-nodejs will be supported until latest 3 version in Node.js
+
+
 ## Installation
 
 1. Add the dependency to your `shard.yml`:
