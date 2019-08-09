@@ -89,7 +89,7 @@ module Nodejs
   def setup_env(path : Array(String)) : Hash(String, String)
     js_dir = "#{ENV["HOME"]}/.crystal-nodejs/js"
     node_path = {
-      "NODE_PATH" => "./:#{js_dir}:#{js_dir}/node_modules:",
+      "NODE_PATH" => ".:./:#{js_dir}:#{js_dir}/node_modules:",
     }
     if !path.empty?
       node_path["NODE_PATH"] = "#{node_path["NODE_PATH"]}:#{path.join(":")}"
