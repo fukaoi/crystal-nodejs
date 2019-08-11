@@ -66,7 +66,7 @@ describe "Replace relative path" do
 
     res = Internal.replace_relative_absolute_path(code)
     res.should eq expect_code
-	end
+  end
 
   it "require('xxxxxxx and require(\"xxxxxxx" do
     code = <<-SRC
@@ -83,5 +83,5 @@ describe "Replace relative path" do
 
     res = Internal.replace_relative_absolute_path(code)
     res.should eq expect_code
-	end
+  end
 end

@@ -44,7 +44,7 @@ module Nodejs::Internal
 
   def replace_relative_absolute_path(path : String)
     path.gsub(/(require\('\.\/)/, "require('")
-    .gsub(/(require\("\.\/)/, "require(\"")
+      .gsub(/(require\("\.\/)/, "require(\"")
   end
 
   def display_debug(output : String) : Void
