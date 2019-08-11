@@ -37,7 +37,7 @@ module Nodejs
     unless File.exists?(file_path)
       raise CrystalSideException.new("File not found: #{file_path}")
     end
-    eval(File.read(file_path))
+    eval(Internal.replace_relative_absolute_path(File.read(file_path)))
   end
 
   def load_jsfile(file_path : String) : String
@@ -45,7 +45,7 @@ module Nodejs
     unless File.exists?(path)
       raise CrystalSideException.new("File not found: #{path}")
     end
-    File.read(path)
+    Internal.replace_relative_absolute_path(File.read(path))
   end
 
   def replace_params(

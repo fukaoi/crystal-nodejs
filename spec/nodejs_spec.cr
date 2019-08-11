@@ -1,6 +1,10 @@
 require "./spec_helper"
 require "file_utils"
 
+alias JSSideException = Nodejs::JSSideException
+alias CrystalSideException = Nodejs::CrystalSideException
+alias Internal = Nodejs::Internal
+
 describe Nodejs do
   it "Exec eval with plain text" do
     code = <<-CODE
@@ -38,7 +42,7 @@ describe Nodejs do
     code = <<-SRC
       throw new Error('non local exit');
     SRC
-    expect_raises(Nodejs::JSSideException) do
+    expect_raises(JSSideException) do
       Nodejs.eval(code)
     end
   end
@@ -47,7 +51,7 @@ describe Nodejs do
     code = <<-SRC
       return false;
     SRC
-    expect_raises(Nodejs::JSSideException) do
+    expect_raises(JSSideException) do
       Nodejs.eval(code)
     end
   end
@@ -61,7 +65,7 @@ describe Nodejs do
       toCrystalErr(e);
     }
     SRC
-    expect_raises(Nodejs::JSSideException, mess) do
+    expect_raises(JSSideException, mess) do
       Nodejs.eval(code)
     end
   end
@@ -107,7 +111,7 @@ describe Nodejs do
       toCrystalErr(error);
     });
     SRC
-    expect_raises(Nodejs::JSSideException, mess) do
+    expect_raises(JSSideException, mess) do
       Nodejs.eval(code)
     end
   end
@@ -186,29 +190,23 @@ describe "Replace from JS raw code to param" do
   it "libnode version" do
     Nodejs.version
   end
-
-  it "Create written raw js" do
-    code = "spec"
-    hash = Digest::MD5.hexdigest(code)
-    Nodejs::Internal.create_raw_js(code)
-    File.exists?("/tmp/raw_js/#{hash}")
-  end
 end
 
 describe "Read js code file and Eval js code" do
   it "read example js file" do
+    FileUtils.cp("spec/js/output.js", "#{Internal.home_dir}/js/output.js")
     res = Nodejs.file_run("spec/js/file_run.js")
     res["text"].to_s.empty?.should be_false
   end
 
   it "Not found js file" do
-    expect_raises(Nodejs::CrystalSideException) do
+    expect_raises(CrystalSideException) do
       Nodejs.file_run("spec/js/hoge_fuga.js")
     end
   end
 
   it "Not found js file" do
-    expect_raises(Nodejs::CrystalSideException) do
+    expect_raises(CrystalSideException) do
       Nodejs.load_jsfile("spec/js/hoge_fuga.js")
     end
   end
