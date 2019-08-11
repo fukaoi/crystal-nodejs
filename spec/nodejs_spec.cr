@@ -3,7 +3,6 @@ require "file_utils"
 
 alias JSSideException = Nodejs::JSSideException
 alias CrystalSideException = Nodejs::CrystalSideException
-alias Internal = Nodejs::Internal
 
 describe Nodejs do
   it "Exec eval with plain text" do
@@ -194,7 +193,7 @@ end
 
 describe "Read js code file and Eval js code" do
   it "read example js file" do
-    FileUtils.cp("spec/js/output.js", "#{Internal.home_dir}/js/output.js")
+    FileUtils.cp("spec/js/output.js", "#{Internal.home_dir}/output.js")
     res = Nodejs.file_run("spec/js/file_run.js")
     res["text"].to_s.empty?.should be_false
   end
