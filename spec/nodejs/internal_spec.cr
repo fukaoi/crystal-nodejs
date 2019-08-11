@@ -52,4 +52,36 @@ describe "Replace relative path" do
     res = Internal.replace_relative_absolute_path(code)
     res.should eq expect_code
   end
+
+  it "require(\"xxxxxxx" do
+    code = <<-SRC
+      var fs = require("fs");
+      var {output} = require("./original.js");
+    SRC
+
+    expect_code = <<-SRC
+      var fs = require("fs");
+      var {output} = require("original.js");
+    SRC
+
+    res = Internal.replace_relative_absolute_path(code)
+    res.should eq expect_code
+	end
+
+  it "require('xxxxxxx and require(\"xxxxxxx" do
+    code = <<-SRC
+      var fs = require("fs");
+      var {output} = require('./original.js');
+      var {output2} = require("./original2.js");
+    SRC
+
+    expect_code = <<-SRC
+      var fs = require("fs");
+      var {output} = require('original.js');
+      var {output2} = require("original2.js");
+    SRC
+
+    res = Internal.replace_relative_absolute_path(code)
+    res.should eq expect_code
+	end
 end
