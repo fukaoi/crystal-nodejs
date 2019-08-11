@@ -193,7 +193,7 @@ end
 
 describe "Read js code file and Eval js code" do
   it "read example js file" do
-    FileUtils.cp("spec/js/output.js", "#{Internal.home_dir}/output.js")
+    FileUtils.cp("spec/js/disp.js", "#{Nodejs::Internal.home_dir}/js/disp.js")
     res = Nodejs.file_run("spec/js/file_run.js")
     res["text"].to_s.empty?.should be_false
   end
