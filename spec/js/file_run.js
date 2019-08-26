@@ -1,5 +1,6 @@
 const fs = require('fs');
+const {disp} = require('./disp.js');
 fs.readFile('spec/nodejs_spec.cr', 'utf8', (err, text) => {
-    console.log('text file!');
+    disp('exec fs.readFile');
     toCrystal({text: text});
 });

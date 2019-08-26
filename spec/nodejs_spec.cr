@@ -1,4 +1,8 @@
 require "./spec_helper"
+require "file_utils"
+
+alias JSSideException = Nodejs::JSSideException
+alias CrystalSideException = Nodejs::CrystalSideException
 
 describe Nodejs do
   it "Exec eval with plain text" do
@@ -37,7 +41,7 @@ describe Nodejs do
     code = <<-SRC
       throw new Error('non local exit');
     SRC
-    expect_raises(Nodejs::JSSideException) do
+    expect_raises(JSSideException) do
       Nodejs.eval(code)
     end
   end
@@ -46,7 +50,7 @@ describe Nodejs do
     code = <<-SRC
       return false;
     SRC
-    expect_raises(Nodejs::JSSideException) do
+    expect_raises(JSSideException) do
       Nodejs.eval(code)
     end
   end
@@ -57,11 +61,10 @@ describe Nodejs do
     try {
       throw new Error('#{mess}');
     } catch(e) {
-      console.error(e);
-      process.exit(1);
+      toCrystalErr(e);
     }
     SRC
-    expect_raises(Nodejs::JSSideException, mess) do
+    expect_raises(JSSideException, mess) do
       Nodejs.eval(code)
     end
   end
@@ -88,7 +91,7 @@ describe Nodejs do
     promise.then((value) => {
       toCrystal({promise: value});
     }).catch((error) => {
-      console.error(error);
+      toCrystalErr(error);
     });
     SRC
     res = Nodejs.eval(code)
@@ -104,10 +107,10 @@ describe Nodejs do
     promise.then((value) => {
       console.log(value);
     }).catch((error) => {
-      console.error(error);
+      toCrystalErr(error);
     });
     SRC
-    expect_raises(Nodejs::JSSideException, mess) do
+    expect_raises(JSSideException, mess) do
       Nodejs.eval(code)
     end
   end
@@ -188,45 +191,21 @@ describe "Replace from JS raw code to param" do
   end
 end
 
-describe "Extract result data from result string code" do
-  it "Exec extract" do
-    code = <<-SRC
-			lslkfkldklsklklfaowpwp
-			10320093903490902o2ioio3i3i3
-      '{"#{Nodejs::Values::RETURN_KEY_NAME}":{"data":{"number":7777777777}}}'
-			xklx;zxkl0932fijgv09329023333
-		SRC
-    tuple = Nodejs.extract_result(code)
-    tuple[:result]["data"]["number"].should eq 7777777777
-    tuple[:output].empty?.should be_false
-  end
-
-  it "Exec extract in no json data" do
-    code = <<-SRC
-			lslkfkldklsklklfaowpwp
-			10320093903490902o2ioio3i3i3
-			xklx;zxkl0932fijgv09329023333
-		SRC
-    tuple = Nodejs.extract_result(code)
-    tuple[:result].size.should eq 0
-    tuple[:output].empty?.should be_false
-  end
-end
-
 describe "Read js code file and Eval js code" do
   it "read example js file" do
+    FileUtils.cp("spec/js/disp.js", "#{Nodejs::Internal.home_dir}/js/disp.js")
     res = Nodejs.file_run("spec/js/file_run.js")
     res["text"].to_s.empty?.should be_false
   end
 
   it "Not found js file" do
-    expect_raises(Nodejs::CrystalSideException) do
+    expect_raises(CrystalSideException) do
       Nodejs.file_run("spec/js/hoge_fuga.js")
     end
   end
 
   it "Not found js file" do
-    expect_raises(Nodejs::CrystalSideException) do
+    expect_raises(CrystalSideException) do
       Nodejs.load_jsfile("spec/js/hoge_fuga.js")
     end
   end

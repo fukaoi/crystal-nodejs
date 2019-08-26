@@ -1,44 +1,46 @@
 require "../spec_helper"
 
-describe Nodejs::Npm do
+alias Npm = Nodejs::Npm
+
+describe Npm do
   it "npm init" do
-    res = Nodejs::Npm.init
+    res = Npm.init
     res.should be_true
   end
 
   it "Check npm install module(No install)" do
     target_module = "jquery"
-    Nodejs::Npm.uninstall(target_module)
-    res = Nodejs::Npm.is_installed?(target_module)
+    Npm.uninstall(target_module)
+    res = Npm.is_installed?(target_module)
     res.should be_false
   end
 
   it "npm install latest module" do
-    res = Nodejs::Npm.install("jquery")
+    res = Npm.install("jquery")
     res.should be_true
-    res = Nodejs::Npm.uninstall("jquery")
+    res = Npm.uninstall("jquery")
     res.should be_true
   end
 
   it "npm install module target version" do
-    res = Nodejs::Npm.install("jquery@3.4.0")
+    res = Npm.install("jquery@3.4.0")
     res.should be_true
-    res = Nodejs::Npm.uninstall("jquery@3.4.0")
+    res = Npm.uninstall("jquery@3.4.0")
     res.should be_true
   end
 
   it "npm install module by package.json" do
     # spec/js/package.json
-    res = Nodejs::Npm.install
+    res = Npm.install
     res.should be_true
-    res = Nodejs::Npm.is_installed?("mathjs")
+    res = Npm.is_installed?("mathjs")
     res.should be_true
   end
 
   it "Check npm install module(installed)" do
-    res = Nodejs::Npm.install("express")
+    res = Npm.install("express")
     res.should be_true
-    res = Nodejs::Npm.is_installed?("express")
+    res = Npm.is_installed?("express")
     res.should be_true
   end
 end
