@@ -198,6 +198,15 @@ describe "Read js code file and Eval js code" do
     res["text"].to_s.empty?.should be_false
   end
 
+  it "read example js file in sub directory" do
+    subdir = "#{Nodejs::Internal.home_dir}/js/demo"
+    FileUtils.mkdir(subdir)
+    FileUtils.cp("spec/js/disp.js", "#{subdir}/disp.js")
+    res = Nodejs.file_run("spec/js/file_run.js")
+    FileUtils.rm_rf(subdir)
+    res["text"].to_s.empty?.should be_false
+  end
+
   it "Not found js file" do
     expect_raises(CrystalSideException) do
       Nodejs.file_run("spec/js/hoge_fuga.js")

@@ -85,3 +85,20 @@ describe "Replace relative path" do
     res.should eq expect_code
   end
 end
+
+describe "Scan sub dir" do
+  it "Get sub directory name" do
+    dirpaths = [] of String
+    dirpaths << "#{Internal.home_dir}/js/spec"
+    dirpaths << "#{Internal.home_dir}/js/spec2"
+    dirpaths.map { |dir| Dir.mkdir(dir) }
+    res = Internal.scanning_sub_dir
+    dirpaths.map { |dir| Dir.rmdir(dir) }
+    res.size.should eq 4
+  end
+
+  it "No get sub directory" do
+    res = Internal.scanning_sub_dir
+    res.empty?.should be_true
+  end
+end
