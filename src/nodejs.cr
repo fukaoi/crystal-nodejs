@@ -6,7 +6,7 @@ module Nodejs
 
   NODE_PATH = "#{Internal.home_dir}/bin/node"
 
-  def eval(source_code : String, node_path : Array = [] of String) : JSON::Any
+  def eval(source_code : String) : JSON::Any
     # use make audit
     Internal.create_raw_js(source_code) unless ENV["RAW_JS"]? == nil
 
@@ -15,7 +15,7 @@ module Nodejs
     status = Process.run(
       NODE_PATH,
       args: {"-e", "#{Function.set_return_js} #{source_code}"},
-      env: Internal.setup_env(node_path),
+      env: Internal.setup_node_path(Internal.scanning_sub_dir),
       output: io,
       error: io_error
     )

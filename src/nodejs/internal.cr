@@ -22,15 +22,23 @@ module Nodejs::Internal
     {result: result, output: output}
   end
 
-  def setup_env(path : Array(String)) : Hash(String, String)
+  def setup_node_path(add_path : Array(String)) : Hash(String, String)
     js_dir = "#{ENV["HOME"]}/.crystal-nodejs/js"
     node_path = {
-      "NODE_PATH" => ".:./:#{js_dir}:#{js_dir}/node_modules:",
+      "NODE_PATH" => "#{js_dir}:#{js_dir}/node_modules:",
     }
-    if !path.empty?
-      node_path["NODE_PATH"] = "#{node_path["NODE_PATH"]}:#{path.join(":")}"
+    if !add_path.empty?
+      node_path["NODE_PATH"] = "#{node_path["NODE_PATH"]}:#{add_path.join(":")}"
     end
     node_path
+  end
+
+  def scanning_sub_dir : Array(String)
+    dirs = [] of String
+    Dir.glob("#{home_dir}/js/*/") do |dir|
+      dirs << dir unless "#{home_dir}/js/node_modules/" == dir
+    end
+    dirs.clone.map { |dir| "#{dir}node_modules/" } + dirs
   end
 
   def create_raw_js(raw : String) : Void
