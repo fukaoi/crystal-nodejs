@@ -350,7 +350,7 @@ ext/
 
 #### Create json class
 
-* May want to convert crystal-lang json mapper type because response parameter from Nodejs.eval() method is all JSON::Any type. So the recommended tool is [jsontocr](https://github.com/molnarmark/jsontocr), very simple and easy.
+May want to convert crystal-lang json mapper type because response parameter from Nodejs.eval() method is all JSON::Any type. So the recommended tool is [jsontocr](https://github.com/molnarmark/jsontocr), very simple and easy.
 
 
 #### Exception
@@ -369,12 +369,36 @@ ext/
 
 #### Raw JS
 
+If will do mixing crystal-lang code and  JS  code, Debug is hard.  But crystal-nodejs can export Raw JS,  Can easily see the JS code that is actually executed.
+
+this function is enable below
+
+```crystal
+RAW_JS=true crystal run(or spec)
+```
+
+`RAW_JS=true` best timing is when execute `spec`, because must call Nodejs.eval() method.Export of most Raw JS if coverage of spec code is high.
+To see exported the code, **/tmp/raw_js/** 
+
+```bash
+/tmp/raw_js/
+├── 0cc6107a79be7b828321e57a81a5f828.js
+├── 124d1032b2bc7c02cd59430dd8d1ba65.js
+├── 170fa95978969d76eca70d2947da4e2f.js
+├── 31df5239bef6b4510b8b6e3840627a58.js
+├── eaaa61190908871f1571bc5eca89b87a.js
+├── ff3c96e301d7d34c34c4a86fef92e09b.js
+└── ff4d0b01de3d93d612bb5a09ed381711.js
+```
+
+
+
 
 #### Safety
 
-* Scan for vulnerabilities when build project. If be found vulnerabilities, build is supposed to fail.this logic execute `npm audit` command in Makefile.execute `npm audit --fix` command and build continue 
+Scan for vulnerabilities when build project. If be found vulnerabilities, build is supposed to fail.this logic execute `npm audit` command in Makefile.execute `npm audit --fix` command and build continue 
 
-* use `make audit`, export raw JS to /tmp/raw_js/ and do static analysis with eslint-plugin-security 
+use `make audit`, export raw JS to /tmp/raw_js/ and do static analysis with eslint-plugin-security 
 
 
 ## Contributing
