@@ -391,14 +391,16 @@ To see exported the code, **/tmp/raw_js/**
 └── ff4d0b01de3d93d612bb5a09ed381711.js
 ```
 
-
-
-
 #### Safety
 
 Scan for vulnerabilities when build project. If be found vulnerabilities, build is supposed to fail.this logic execute `npm audit` command in Makefile.execute `npm audit --fix` command and build continue 
 
 use `make audit`, export raw JS to /tmp/raw_js/ and do static analysis with eslint-plugin-security 
+
+## Case study
+
+* [crystal-ripple-sdk](https://github.com/fukaoi/crystal-ripple-sdk) ... crystal client sdk for ripple in cryptocurrency
+* [crystal-ethereum-sdk](https://github.com/fukaoi/crystal-ethereum-sdk) ... crystal client sdk for ethereum in cryptocurrency
 
 
 ## Contributing
