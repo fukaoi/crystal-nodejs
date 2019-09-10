@@ -6,6 +6,8 @@ Node.js engine for crystal-lang. JS code and npm module executes on crystal-node
 
 Process.run method is low overhead, Compare pure Node.js js code and crystal-nodejs js code, There was no difference in performance(see Benchmark heading  about performance detail).
 
+The biggest merit is that **over 11,000,000**  npm modules can be used in crystal and Will expand the Crystal Lang ecosystem
+
 Using crystal-nodejs can pass through  Node.js result of crystal-lang. Happy Crystaling!! :tada:
 
 <h4>Architecture image</h4>
@@ -46,7 +48,7 @@ $HOME/.crystal-nodejs/
 │   ├── node  
 │   ├── npm 
 │   └── npx
-├── js         // Origina JS code, package.json
+├── js         // Origina JS code, package.json. Enable the subdirectories below js/*/a.js
 └── lib        // shared object for Node.js
     └── libnode.so.64(libnode.64.dylib)
 
