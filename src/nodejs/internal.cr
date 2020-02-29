@@ -1,4 +1,5 @@
 require "digest/md5"
+require "file_utils"
 
 module Nodejs::Internal
   extend self
