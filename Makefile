@@ -56,7 +56,7 @@ build:
 		-I${NODE_INCLUDE_DIR}/node/ \
 		${EXT_DIR}/libnode.cc ${SOURCE} -o \
 		${HIDDEN_DIR}/bin/node \
-		${OBJECT_DIR}/${SHARED_OBJECT}; \
+		${OBJECT_DIR}/${SHARED_OBJECT} -lm; \
 
 # Run again symbolic for mac osx
 	@ln -sf ${HIDDEN_DIR}/lib/node_modules/npm/bin/npm-cli.js ${HIDDEN_DIR}/bin/npm
