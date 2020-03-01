@@ -6,9 +6,12 @@ NODE_INCLUDE_DIR   = ${EXT_DIR}/${NODE_VERSION}/include
 OBJECT_DIR         = ${EXT_DIR}/obj/${NODE_VERSION}
 HIDDEN_DIR         = $(HOME)/.crystal-nodejs
 RAW_JS_DIR         = /tmp/raw_js
-NODE_VERSION       = 10.16.0
+# NODE_VERSION       = 10.16.0
+NODE_VERSION       = 12.13.0
+# NODE_MODULE_VERSION = 64
+NODE_MODULE_VERSION = 72
 OS                 := $(shell uname)
-SHARED_OBJECT      := $(shell if [ ${OS} = "Linux" ]; then echo libnode.so.64; elif [ ${OS} = "Darwin" ]; then echo libnode.64.dylib; fi)
+SHARED_OBJECT      := $(shell if [ ${OS} = "Linux" ]; then echo libnode.so.${NODE_MODULE_VERSION}; elif [ ${OS} = "Darwin" ]; then echo libnode.${NODE_MODULE_VERSION}.dylib; fi)
 BUILD_OPTION       := $(shell if [ ${OS} = "Linux" ]; then echo -rpath=${HIDDEN_DIR}/lib; elif [ ${OS} = "Darwin" ]; then echo -rpath ${HIDDEN_DIR}/lib; fi)
 
 
