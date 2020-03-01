@@ -16,7 +16,7 @@ script:
   - sudo cp crystal-${CRYSTAL_VERSION}-1/bin/crystal /usr/local/bin/
   - sudo cp crystal-${CRYSTAL_VERSION}-1/bin/shards /usr/local/bin/
   - sudo mv crystal-${CRYSTAL_VERSION}-1 /usr/local/lib/crystal
-  - sudo apt-get -qq update && sudo apt-get -qq install -y libssl-dev libxml2-dev libyaml-dev libgmp-dev libreadline-dev libevent-dev
+  - sudo apt-get -qq update && sudo apt-get -qq install -y libssl-dev libxml2-dev libyaml-dev libgmp-dev libreadline-dev libevent-dev build-essential
   - export CRYSTAL_PATH="/usr/local/lib/crystal/share/crystal/src:lib" && shards update
   - export CRYSTAL_PATH="/usr/local/lib/crystal/share/crystal/src:lib" && crystal tool format spec src --check 
   - make
