@@ -18,7 +18,7 @@ In the above architecture image, crystal-nodejs provides Node.js, LibC, lib that
 
 ## Supported OS
 
-- Linux(Ubuntu16.04, 18.04)
+- Linux(Ubuntu16.04, 18.04, Arch Linux...Maybe will work other distributions)
 - MacOSX(High Sierra)
 - Windows(Unfortunately yet not supported on crystal-lang...)
 
