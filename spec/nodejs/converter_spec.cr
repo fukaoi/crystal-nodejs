@@ -18,7 +18,7 @@ describe "convert_jss" do
 
   it "convert_js js type JSON String" do
     res = Converter.convert_js("{\"key\":\"value\"}")
-    res.should eq %("{\"key\":\"value\"}")
+    res.should eq %("{"key":"value"}")
   end
 
   it "convert_js js type JSON::Any" do
