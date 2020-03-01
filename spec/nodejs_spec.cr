@@ -1,5 +1,4 @@
 require "./spec_helper"
-require "file_utils"
 
 alias JSSideException = Nodejs::JSSideException
 alias CrystalSideException = Nodejs::CrystalSideException
