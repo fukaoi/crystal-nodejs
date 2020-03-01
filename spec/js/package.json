@@ -10,10 +10,10 @@
   "license": "ISC",
   "dependencies": {
     "jquery": "^3.4.1",
-    "jsdom": "15.1.1",
+    "jsdom": "^15.1.1",
     "lodash": "^4.17.14",
-    "mathjs": "6.0.2",
-    "stellar-sdk": "1.0.3"
+    "mathjs": "^6.0.2",
+    "stellar-sdk": "^1.0.3"
   },
   "devDependencies": {},
   "description": ""
