@@ -1,3 +1,10 @@
+#### Comment out use old version #####
+# NODE_VERSION       = 12.13.0
+# NODE_MODULE_VERSION = 72
+NODE_VERSION       = 10.16.0
+NODE_MODULE_VERSION = 64
+######################################
+
 CRYSTAL_NODEJS_DIR := $(abspath $(dir $(lastword $(MAKEFILE_LIST))))
 EXT_DIR            = ${CRYSTAL_NODEJS_DIR}/ext
 NODE_BIN_DIR       = ${EXT_DIR}/${NODE_VERSION}/bin
@@ -6,9 +13,9 @@ NODE_INCLUDE_DIR   = ${EXT_DIR}/${NODE_VERSION}/include
 OBJECT_DIR         = ${EXT_DIR}/obj/${NODE_VERSION}
 HIDDEN_DIR         = $(HOME)/.crystal-nodejs
 RAW_JS_DIR         = /tmp/raw_js
-NODE_VERSION       = 10.16.0
+
 OS                 := $(shell uname)
-SHARED_OBJECT      := $(shell if [ ${OS} = "Linux" ]; then echo libnode.so.64; elif [ ${OS} = "Darwin" ]; then echo libnode.64.dylib; fi)
+SHARED_OBJECT      := $(shell if [ ${OS} = "Linux" ]; then echo libnode.so.${NODE_MODULE_VERSION}; elif [ ${OS} = "Darwin" ]; then echo libnode.${NODE_MODULE_VERSION}.dylib; fi)
 BUILD_OPTION       := $(shell if [ ${OS} = "Linux" ]; then echo -rpath=${HIDDEN_DIR}/lib; elif [ ${OS} = "Darwin" ]; then echo -rpath ${HIDDEN_DIR}/lib; fi)
 
 
@@ -49,7 +56,7 @@ build:
 		-I${NODE_INCLUDE_DIR}/node/ \
 		${EXT_DIR}/libnode.cc ${SOURCE} -o \
 		${HIDDEN_DIR}/bin/node \
-		${OBJECT_DIR}/${SHARED_OBJECT}; \
+		${OBJECT_DIR}/${SHARED_OBJECT} -lm; \
 
 # Run again symbolic for mac osx
 	@ln -sf ${HIDDEN_DIR}/lib/node_modules/npm/bin/npm-cli.js ${HIDDEN_DIR}/bin/npm
