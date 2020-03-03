@@ -1,9 +1,8 @@
 language: crystal
 
-
 before_install:
-  - sudo apt update -y && sudo apt upgrade -y
-  - sudo apt -y install build-essential
+  - sudo apt update -y 
+  - sudo apt -y install build-essential gcc-8 libc6
 
 script:
   - crystal tool format --check
