@@ -1,8 +1,8 @@
 #### Comment out use old version #####
-# NODE_VERSION       = 12.13.0
-# NODE_MODULE_VERSION = 72
-NODE_VERSION       = 10.16.0
-NODE_MODULE_VERSION = 64
+NODE_VERSION       = 12.13.0
+NODE_MODULE_VERSION = 72
+# NODE_VERSION       = 10.16.0
+# NODE_MODULE_VERSION = 64
 ######################################
 
 CRYSTAL_NODEJS_DIR := $(abspath $(dir $(lastword $(MAKEFILE_LIST))))
