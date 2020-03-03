@@ -4,7 +4,7 @@ version: 0.1.2
 authors:
   - fukaoi 
 
-crystal: 0.29.0
+crystal: 0.33.0
 
 license: MIT
 
