@@ -2,8 +2,9 @@ language: crystal
 dist: bionic
 
 before_install:
-  # - sudo apt update -y && sudo apt upgrade -y
-  - wget -O glibc.deb http://archive.ubuntu.com/ubuntu/pool/main/g/glibc/libc6_2.30-0ubuntu3_amd64.deb && sudo dpkg -i glibc.deb && sudo apt install -f
+  - sudo apt update -y 
+  - sudo apt clean
+  - wget -O glibc.deb http://archive.ubuntu.com/ubuntu/pool/main/g/glibc/libc6_2.30-0ubuntu3_amd64.deb && sudo dpkg -i glibc.deb && sudo dpkg --configure -a && sudo apt install -f
 
 
 script:
