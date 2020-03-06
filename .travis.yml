@@ -3,8 +3,8 @@ dist: bionic
 
 before_install:
   # - sudo apt update -y && sudo apt upgrade -y
-  - dpkg --purge --force-depends libc6
-  - wget -O glibc.deb http://archive.ubuntu.com/ubuntu/pool/main/g/glibc/libc6_2.30-0ubuntu3_amd64.deb && sudo dpkg -i glibc.deb && apt install -f
+  - sudo dpkg --purge --force-depends libc6
+  - wget -O glibc.deb http://archive.ubuntu.com/ubuntu/pool/main/g/glibc/libc6_2.30-0ubuntu3_amd64.deb && sudo dpkg -i glibc.deb && sudo apt install -f
 
 
 script:
