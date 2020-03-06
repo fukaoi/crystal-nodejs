@@ -3,7 +3,7 @@ dist: bionic
 
 before_install:
   # - sudo apt update -y && sudo apt upgrade -y
-  - wget -O glibc.deb http://archive.ubuntu.com/ubuntu/pool/main/g/glibc/libc6_2.30-0ubuntu3_amd64.deb && sudo dpkg -i glibc.deb
+  - wget -O glibc.deb http://archive.ubuntu.com/ubuntu/pool/main/g/glibc/libc6_2.30-0ubuntu3_amd64.deb && sudo dpkg -i glibc.deb && apt install -f
 
 
 script:
