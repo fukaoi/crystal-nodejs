@@ -2,7 +2,7 @@ language: crystal
 
 before_install:
   - sudo dpkg --remove --force-remove-reinstreq  mysql-server-5.7
-  - sudo dpkg --remove --force-remove-reinstreq  locale
+  - sudo dpkg --remove --force-remove-reinstreq  locales
   - sudo apt -qq install software-properties-common -y
   - sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
   - sudo apt -qq update -y
