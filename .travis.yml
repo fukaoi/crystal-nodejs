@@ -1,5 +1,5 @@
 language: generic
-dist: bionic
+dist: xenial
 
 before_script:
   - CRYSTAL_VERSION=0.33.0
