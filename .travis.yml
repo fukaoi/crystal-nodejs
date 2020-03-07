@@ -15,7 +15,7 @@ script:
 :amd64 libc6:amd64
   - export CRYSTAL_PATH="/usr/local/lib/crystal/share/crystal/src:lib" && shards update
   - export CRYSTAL_PATH="/usr/local/lib/crystal/share/crystal/src:lib" && crystal tool format spec src --check 
-  -   - wget -O glibc.deb http://archive.ubuntu.com/ubuntu/pool/main/g/glibc/libc6_2.30-0ubuntu3_amd64.deb && sudo dpkg -i --force-conflicts glibc.deb 
+  -   - wget -O glibc.deb http://archive.ubuntu.com/ubuntu/pool/main/g/glibc/libc6_2.30-0ubuntu3_amd64.deb && sudo dpkg -B -i --force-conflicts glibc.deb 
   - make
   - crystal spec 
 
