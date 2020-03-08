@@ -1,6 +1,6 @@
 #### Comment out use old version #####
-NODE_VERSION       = 12.13.1
-NODE_MODULE_VERSION = 72
+NODE_VERSION       = 13.10.1
+NODE_MODULE_VERSION = 79
 # NODE_VERSION       = 10.16.0
 # NODE_MODULE_VERSION = 64
 ######################################
