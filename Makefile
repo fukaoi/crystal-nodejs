@@ -1,5 +1,5 @@
 #### Comment out use old version #####
-NODE_VERSION       = 12.13.0
+NODE_VERSION       = 12.13.1
 NODE_MODULE_VERSION = 72
 # NODE_VERSION       = 10.16.0
 # NODE_MODULE_VERSION = 64
@@ -52,11 +52,11 @@ build:
   
 # build node binary
 	@g++ \
-		-std=c++11 -g -Wl,${BUILD_OPTION} \
+		-std=c++11 -Wl,${BUILD_OPTION} \
 		-I${NODE_INCLUDE_DIR}/node/ \
 		${EXT_DIR}/libnode.cc ${SOURCE} -o \
 		${HIDDEN_DIR}/bin/node \
-		${OBJECT_DIR}/${SHARED_OBJECT} -lm; \
+		${OBJECT_DIR}/${SHARED_OBJECT}; \
 
 # Run again symbolic for mac osx
 	@ln -sf ${HIDDEN_DIR}/lib/node_modules/npm/bin/npm-cli.js ${HIDDEN_DIR}/bin/npm
@@ -98,7 +98,7 @@ nodejs:
 	fi
 
 # node build
-	@cd /tmp/node && ./configure --shared --prefix=/tmp/${NODE_VERSION}
+	@cd /tmp/node && ./configure --shared --prefix=/tmp/${NODE_VERSION} --without-etw --without-node-snapshot
 	@cd /tmp/node && make -j5  && make install
 
 # create dir for ext/vxxxxxxxx/
