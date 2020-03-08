@@ -24,9 +24,9 @@ In the above architecture image, crystal-nodejs provides Node.js, LibC, lib that
 
 ## Supported Node.js
 
-* Look at [this](https://github.com/fukaoi/crystal-nodejs/tree/master/ext) directory(e.g 10.16.0, 12.13.0) for supported versions.crystal-nodejs will be supported until latest 3 version in Node.js
+* Look at [this](https://github.com/fukaoi/crystal-nodejs/tree/master/ext) directory(e.g 10.16.0, 13.10.1) for supported versions.crystal-nodejs will be supported until latest 3 version in Node.js
 
-* Current Node.js latest version: 12.13.0
+* Current Node.js latest version: 13.10.1
 
 ## Installation
 
