@@ -400,9 +400,7 @@ use `make audit`, export raw JS to /tmp/raw_js/ and do static analysis with esli
 
 ## Case study
 
-* [crystal-ripple-sdk](https://github.com/fukaoi/crystal-ripple-sdk) ... crystal client sdk for ripple in cryptocurrency
-* [crystal-ethereum-sdk](https://github.com/fukaoi/crystal-ethereum-sdk) ... crystal client sdk for ethereum in cryptocurrency
-
+Now writting...
 
 ## Contributing
 
