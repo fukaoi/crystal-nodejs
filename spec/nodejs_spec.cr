@@ -101,7 +101,7 @@ describe Nodejs do
     mess = "error promise"
     code = <<-SRC
     const promise = new Promise((resolve, reject) =>{
-      reject(#{mess});
+      reject('#{mess}');
     });
     promise.then((value) => {
       console.log(value);
