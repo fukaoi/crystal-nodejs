@@ -93,7 +93,7 @@ describe "Scan sub dir" do
     dirpaths << "#{Internal.home_dir}/js/spec2"
     dirpaths.map { |dir| Dir.mkdir(dir) }
     res = Internal.scanning_sub_dir
-    dirpaths.map { |dir| Dir.rmdir(dir) }
+    dirpaths.map { |dir| Dir.delete(dir) }
     res.size.should eq 4
   end
 
