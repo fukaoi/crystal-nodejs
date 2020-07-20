@@ -36,17 +36,3 @@ describe "convert_jss" do
     res.should eq "{\"data\":\"Hash\"}"
   end
 end
-
-class Location
-  JSON.mapping(
-    lat: Float64,
-    lng: Float64,
-  )
-end
-
-class House
-  JSON.mapping(
-    address: String,
-    location: {type: Location, nilable: true},
-  )
-end
