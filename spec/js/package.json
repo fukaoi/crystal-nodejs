@@ -9,12 +9,15 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "jquery": "^3.4.1",
+    "express": "^4.17.1",
+    "jquery": "^3.5.1",
     "jsdom": "^15.1.1",
     "lodash": "^4.17.14",
     "mathjs": "^6.0.2",
     "stellar-sdk": "^1.0.3"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "axios": ">=0.21.1"
+  },
   "description": ""
 }
