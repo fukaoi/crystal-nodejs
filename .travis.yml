@@ -7,7 +7,7 @@ before_install:
   - sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
   - sudo apt -qq update -y
   - sudo apt -qq upgrade -y 
-  - wget -O glibc.deb http://archive.ubuntu.com/ubuntu/pool/main/g/glibc/libc6_2.30-0ubuntu2_amd64.deb && sudo dpkg -B -i --force-conflicts glibc.deb 
+  - wget -O glibc.deb http://archive.ubuntu.com/ubuntu/pool/main/g/glibc/locales-all_2.32-0ubuntu6_amd64.deb && sudo dpkg -B -i --force-conflicts glibc.deb 
 
 
 script:
