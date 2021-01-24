@@ -1,0 +1,19 @@
+FROM ubuntu:20.04 as builder
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get update
+RUN apt-get upgrade -y 
+RUN apt-get install curl gnupg make g++ libyaml-dev -y
+RUN curl -sL "https://keybase.io/crystal/pgp_keys.asc" | apt-key add -
+RUN echo "deb https://dist.crystal-lang.org/apt crystal main" | tee /etc/apt/sources.list.d/crystal.list
+RUN apt-get update
+RUN apt-get install crystal -y
+
+RUN git clone https://github.com/fukaoi/crystal-nodejs.git
+
+WORKDIR /crystal-nodejs
+
+RUN shards install
+RUN make
+RUN crystal spec
