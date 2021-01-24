@@ -1,8 +1,9 @@
 #### Comment out use old version #####
-NODE_VERSION       = 13.10.1
-NODE_MODULE_VERSION = 79
-# NODE_VERSION       = 10.16.0
-# NODE_MODULE_VERSION = 64
+# NODE_VERSION       = 14.15.4
+# NODE_MODULE_VERSION = 83
+
+NODE_VERSION       = 12.20.1
+NODE_MODULE_VERSION = 72
 ######################################
 
 CRYSTAL_NODEJS_DIR := $(abspath $(dir $(lastword $(MAKEFILE_LIST))))
@@ -80,6 +81,7 @@ install:
 
 .PHONY: nodejs
 nodejs:
+	@echo build target: ${NODE_VERSION}
 
 # git checkout node source
 	@if [ ! -d /tmp/node/ ]; then \
