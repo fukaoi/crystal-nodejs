@@ -15,5 +15,10 @@ RUN git clone https://github.com/fukaoi/crystal-nodejs.git
 WORKDIR /crystal-nodejs
 
 RUN shards install
+
+# No need this 'make'  code if call  from  your shard.yml, 
+# because exectute 'make' in postinstall  
 RUN make
+
 RUN crystal spec
+
