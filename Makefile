@@ -22,7 +22,7 @@ BUILD_OPTION       := $(shell if [ ${OS} = "Linux" ]; then echo -rpath=${HIDDEN_
 SHARED_OBJECT      :=	$(shell \
 											if [ ${OS} = "Linux" ]; then\
 												if [ -n "${IS_ALPINE}" ]; then\
-													echo libnode_alpine.so.${NODE_MODULE_VERSION};\
+													echo /alpine/libnode.so.${NODE_MODULE_VERSION};\
 												else\
 													echo libnode.so.${NODE_MODULE_VERSION};\
 												fi\
