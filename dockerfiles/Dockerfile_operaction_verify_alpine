@@ -14,8 +14,7 @@ RUN apk add --update --no-cache \
 RUN apk add --no-cache \
     libtool \
     automake \
-    autoconf \
-
+    autoconf
 
 RUN ln -s /lib/libc.musl-x86_64.so.1 /lib/ld-linux-x86-64.so.2
 RUN git clone -b feature/alpine https://github.com/fukaoi/crystal-nodejs.git
