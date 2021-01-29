@@ -21,22 +21,16 @@ BUILD_OPTION       := $(shell if [ ${OS} = "Linux" ]; then echo -rpath=${HIDDEN_
 
 SHARED_OBJECT      :=	$(shell \
 											if [ ${OS} = "Linux" ]; then\
-											  if [ -n ${IS_ALPINE}]; then\
-													echo libnode_alpine.so.${NODE_MODULE_VERSION}\
-												else
+												if [ -n "${IS_ALPINE}" ]; then\
+													echo libnode_alpine.${NODE_MODULE_VERSION};\
+												else\
 													echo libnode.so.${NODE_MODULE_VERSION};\
-												fi
-												echo libnode.so.${NODE_MODULE_VERSION};\
+												fi\
 											elif [ ${OS} = "Darwin" ]; then\
 												echo libnode.${NODE_MODULE_VERSION}.dylib;\
 											fi)
 .PHONY: all
 all: 
-
-	@if [ ! ${OS} = "Linux" ] && [ ! ${OS} = "Darwin" ]; then \
-		@echo "Not supported os"; \
-		exit 0; \
-	fi
 
 	make build
 	make install
