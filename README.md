@@ -18,15 +18,15 @@ In the above architecture image, crystal-nodejs provides Node.js, LibC, lib that
 
 ## Supported OS
 
-- Linux(Ubuntu16.04, 18.04, Arch Linux...Maybe will work other distributions)
-- MacOSX(High Sierra)
+- Linux(Ubuntu18.04, 20.04, Arch Linux...Maybe will work other distributions)
+- MacOSX(High Sierra... Maybe will work other os version)
 - Windows(Unfortunately yet not supported on crystal-lang...)
 
 ## Supported Node.js
 
-* Look at [this](https://github.com/fukaoi/crystal-nodejs/tree/master/ext) directory(e.g 10.16.0, 13.10.1) for supported versions.crystal-nodejs will be supported until latest 3 version in Node.js
+* Look at [this](https://github.com/fukaoi/crystal-nodejs/tree/master/ext) directory(e.g 12.20.1, 14.15.4) for supported versions.crystal-nodejs will be supported until latest 2 version in Node.js
 
-* Current Node.js latest version: 13.10.1
+* Current Node.js latest version: 14.15.4
 
 ## Installation
 

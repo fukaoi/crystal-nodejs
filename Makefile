@@ -14,19 +14,23 @@ NODE_INCLUDE_DIR   = ${EXT_DIR}/${NODE_VERSION}/include
 OBJECT_DIR         = ${EXT_DIR}/obj/${NODE_VERSION}
 HIDDEN_DIR         = $(HOME)/.crystal-nodejs
 RAW_JS_DIR         = /tmp/raw_js
-
 OS                 := $(shell uname)
-SHARED_OBJECT      := $(shell if [ ${OS} = "Linux" ]; then echo libnode.so.${NODE_MODULE_VERSION}; elif [ ${OS} = "Darwin" ]; then echo libnode.${NODE_MODULE_VERSION}.dylib; fi)
+IS_ALPINE          := $(shell grep -i "alpine" /etc/issue)
+
 BUILD_OPTION       := $(shell if [ ${OS} = "Linux" ]; then echo -rpath=${HIDDEN_DIR}/lib; elif [ ${OS} = "Darwin" ]; then echo -rpath ${HIDDEN_DIR}/lib; fi)
 
-
+SHARED_OBJECT      :=	$(shell \
+											if [ ${OS} = "Linux" ]; then\
+												if [ -n "${IS_ALPINE}" ]; then\
+													echo libnode_alpine.${NODE_MODULE_VERSION};\
+												else\
+													echo libnode.so.${NODE_MODULE_VERSION};\
+												fi\
+											elif [ ${OS} = "Darwin" ]; then\
+												echo libnode.${NODE_MODULE_VERSION}.dylib;\
+											fi)
 .PHONY: all
 all: 
-
-	@if [ ! ${OS} = "Linux" ] && [ ! ${OS} = "Darwin" ]; then \
-		@echo "Not supported os"; \
-		exit 0; \
-	fi
 
 	make build
 	make install
@@ -64,7 +68,6 @@ build:
 
 # rewrite npm path(Because BSD sed command be different with GNU sed)
 	@crystal run ext/node_path.cr -- ${HIDDEN_DIR}/bin/npm ${HIDDEN_DIR}/bin/node
- 
 
 # Setting node path for npm
 	@${HIDDEN_DIR}/bin/npm config set scripts-prepend-node-path true

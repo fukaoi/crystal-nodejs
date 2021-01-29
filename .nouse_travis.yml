@@ -1,0 +1,17 @@
+language: crystal
+
+before_install:
+  - sudo apt remove --auto-remove mysql-server-5.7
+  - sudo apt remove --auto-remove locales locales-all
+  - sudo apt -qq install software-properties-common -y
+  - sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
+  - sudo apt -qq update -y
+  - sudo apt -qq upgrade -y 
+  - wget -O glibc.deb http://archive.ubuntu.com/ubuntu/pool/main/g/glibc/libc6_2.32-0ubuntu3_amd64.deb && sudo dpkg -B -i --force-conflicts glibc.deb 
+
+
+script:
+  - crystal tool format --check
+  - bin/ameba
+  - make
+  - crystal spec -v
