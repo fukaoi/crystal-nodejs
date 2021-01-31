@@ -1,7 +1,5 @@
 # crystal-nodejs
 
-[![Build Status](https://travis-ci.org/fukaoi/crystal-nodejs.svg?branch=master)](https://travis-ci.org/fukaoi/crystal-nodejs)
-
 Node.js engine for crystal-lang. JS code and npm module executes on crystal-nodejs, And don't need to install Node.js binary.Explain about architecture, Compiled as a shared object Node.js(i.e: libnodejs) and execute as one process on crystal-lang. So call C execvp() system call through Process.run() method, execute in this c function.
 
 Process.run method is low overhead, Compare pure Node.js js code and crystal-nodejs js code, There was no difference in performance(see Benchmark heading  about performance detail).
@@ -55,6 +53,52 @@ $HOME/.crystal-nodejs/
 
 ```
 
+## Using Docker
+
+### alpine
+
+```
+FROM crystallang/crystal:0.35.1-alpine as builder
+
+RUN apk add --update --no-cache \
+    curl \
+    make \
+    python \
+    g++ \ 
+    gcc \
+    gcc-doc \
+    linux-headers \
+    libc6-compat
+
+RUN ln -s /lib/libc.musl-x86_64.so.1 /lib/ld-linux-x86-64.so.2
+RUN git clone https://github.com/fukaoi/crystal-nodejs.git
+
+WORKDIR /crystal-nodejs
+
+RUN shards install
+```
+
+### Ubuntu20
+
+```
+FROM ubuntu:20.04 as builder
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get update
+RUN apt-get upgrade -y 
+RUN apt-get install curl gnupg make g++ libyaml-dev -y
+RUN curl -sL "https://keybase.io/crystal/pgp_keys.asc" | apt-key add -
+RUN echo "deb https://dist.crystal-lang.org/apt crystal main" | tee /etc/apt/sources.list.d/crystal.list
+RUN apt-get update
+RUN apt-get install crystal -y
+
+RUN git clone https://github.com/fukaoi/crystal-nodejs.git
+
+WORKDIR /crystal-nodejs
+
+RUN shards install
+```
 
 ## Usage
 
