@@ -17,7 +17,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Install ubuntu libaries
-      run: sudo apt-get install libtool      
+      run: apt-get install libtool      
     - name: Install dependencies
       run: shards install
     - name: make build and install
