@@ -15,7 +15,7 @@ targets:
 scripts:
   postinstall: make
 
-development_dependencies:
-  ameba:
-    github: veelenga/ameba
-    version: 0.13.1
+# development_dependencies:
+  # ameba:
+    # github: veelenga/ameba
+    # version: 0.13.4
