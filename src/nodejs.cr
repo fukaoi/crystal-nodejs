@@ -53,7 +53,7 @@ module Nodejs
     replaces : Hash = {String => String | Int32 | Float32}
   ) : String
     replaces.each do |k, v|
-      matched = /const[\s]*#{k}[\s]*=[\s]*([\[\]\(\)"'a-z0-9\.\-\_]+)/i.match(source_code)
+      matched = /(?:const|var|let)\s+#{k}\s+=\s((?:\{.*(?=})})|(?:\d+)|(?:\".+\")|(?:\'.+\')|(?:\[.*(?=\])\])|(?:[a-zA-Z.$0-9()'"]+))/.match(source_code)
       unless matched
         raise CrystalSideException.new("No match key:#{k}")
       end

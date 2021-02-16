@@ -166,6 +166,23 @@ describe "Replace from JS raw code to param" do
     Nodejs.eval(res).size.should eq 0
   end
 
+  it "Replace Objects and Arrays" do 
+    code = <<-SRC
+      const a = { }
+      const b = [2,3, 4]
+    SRC
+    hash = {
+      "a" =>  { "two": 2 },
+      "b" => [1,2,3]
+    }
+    expected = <<-SRC
+      const a = {two: 2}
+      const b = [1, 2, 3]
+    SRC
+    res = Nodejs.replace_params(code, hash)
+    res.should eq expected
+  end
+
   it "Replace lower, upper case" do
     code = <<-SRC
       const webserver = config.get('webserver');
