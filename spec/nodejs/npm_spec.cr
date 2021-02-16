@@ -4,8 +4,6 @@ alias Npm = Nodejs::Npm
 
 describe Npm do
   Spec.after_each do 
-    spec_path = File.dirname(__FILE__)
-    FileUtils.rm_r("#{spec_path}/../js/node_modules") if Dir.exists?("#{spec_path}/../js/node_modules")
     FileUtils.rm_r("#{Dir.current}/node_modules") if Dir.exists?("#{Dir.current}/node_modules")
     File.delete("#{Dir.current}/package.json") if File.exists?("#{Dir.current}/package.json")
     File.delete("#{Dir.current}/package-lock.json") if File.exists?("#{Dir.current}/package-lock.json")
