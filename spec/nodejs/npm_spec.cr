@@ -3,6 +3,13 @@ require "../spec_helper"
 alias Npm = Nodejs::Npm
 
 describe Npm do
+  Spec.after_each do 
+    spec_path = File.dirname(__FILE__)
+    FileUtils.rm_r("#{spec_path}/../js/node_modules") if Dir.exists?("#{spec_path}/../js/node_modules")
+    FileUtils.rm_r("#{Dir.current}/node_modules") if Dir.exists?("#{Dir.current}/node_modules")
+    File.delete("#{Dir.current}/package.json") if File.exists?("#{Dir.current}/package.json")
+    File.delete("#{Dir.current}/package-lock.json") if File.exists?("#{Dir.current}/package-lock.json")
+  end
   it "npm init" do
     res = Npm.init
     res.should be_true
@@ -31,6 +38,8 @@ describe Npm do
 
   it "npm install module by package.json" do
     # spec/js/package.json
+    path = File.dirname(__FILE__)
+    res = Npm.at("#{path}/../js").install
     res = Npm.install
     res.should be_true
     res = Npm.is_installed?("mathjs")
