@@ -40,7 +40,6 @@ describe Npm do
     # spec/js/package.json
     path = File.dirname(__FILE__)
     res = Npm.at("#{path}/../js").install
-    res = Npm.install
     res.should be_true
     res = Npm.is_installed?("mathjs")
     res.should be_true
