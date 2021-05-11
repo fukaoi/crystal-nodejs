@@ -9,11 +9,11 @@ math.pow([[-1, 2], [3, 1]], 2)
      // [[7, 0], [0, 7]]
 
 // expressions
-math.eval('1.2 * (2 + 4.5)')     // 7.8
-math.eval('12.7 cm to inch')     // 5 inch
-math.eval('sin(45 deg) ^ 2')     // 0.5
-math.eval('9 / 3 + 2i')          // 3 + 2i
-math.eval('det([-1, 2; 3, 1])')  // -7
+math.evaluate('1.2 * (2 + 4.5)')     // 7.8
+math.evaluate('12.7 cm to inch')     // 5 inch
+math.evaluate('sin(45 deg) ^ 2')     // 0.5
+math.evaluate('9 / 3 + 2i')          // 3 + 2i
+math.evaluate('det([-1, 2; 3, 1])')  // -7
 
 // chaining
 const res = math.chain(3)
