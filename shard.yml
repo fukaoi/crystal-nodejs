@@ -1,10 +1,10 @@
 name: nodejs
-version: 0.1.4
+version: 0.1.6
 
 authors:
   - fukaoi 
 
-crystal: 0.35.1
+crystal: 1.0.0
 
 license: MIT
 
@@ -15,7 +15,7 @@ targets:
 scripts:
   postinstall: make
 
-# development_dependencies:
-  # ameba:
-    # github: veelenga/ameba
-    # version: 0.13.4
+development_dependencies:
+  ameba:
+    github: veelenga/ameba
+    version: 0.14.3
