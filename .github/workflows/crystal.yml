@@ -19,7 +19,7 @@ jobs:
     - name: Update ubuntu
       run: apt-get update -y
     - name: Install ubuntu libaries  
-      run: apt-get install -y libtool autoconf automake     
+      run: apt-get install -y libtool autoconf automake build-essential g++     
     - name: Install dependencies
       run: shards install
     - name: make build and install
