@@ -17,7 +17,8 @@
     "mathjs": "latest",
     "stellar-sdk": "latest",
     "url-parse": "latest",
-    "ws": "latest"
+    "ws": "latest",
+    "minimist": "latest"
   },
   "description": "spec"
 }
