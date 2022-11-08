@@ -1,4 +1,6 @@
 # crystal-nodejs
+![License](https://img.shields.io/badge/license-MIT-blue.svg)
+![version](https://badge.fury.io/gh/fukaoi%2Fcrystal-nodejs.svg)
 
 Node.js engine for crystal-lang. JS code and npm module executes on crystal-nodejs, And don't need to install Node.js binary.Explain about architecture, Compiled as a shared object Node.js(i.e: libnodejs) and execute as one process on crystal-lang. So call C execvp() system call through Process.run() method, execute in this c function.
 
